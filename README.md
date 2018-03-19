@@ -4,7 +4,7 @@ Front-end that is used together with my other project, [Invofy API](https://gith
 
 ## Live Demo
 
-Live demo can be found on [https://invofy.maciejsiwek.com](https://invofy.maciejsiwek.com). 
+Live demo can be found on [http://www.invofy.maciejsiwek.com](http://www.invofy.maciejsiwek.com). 
 
 Feel free to log in with `demo` / `password`. Most of the functionality is not yet implemented.
 

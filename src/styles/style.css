@@ -1,0 +1,18 @@
+/* Helpers */
+.mt-2 {
+  margin-top: 20px;
+}
+
+/* Transitions */
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: 0.2s;
+}
+
+.fade-enter-active {
+  transition-delay: 0.2s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}

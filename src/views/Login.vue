@@ -10,16 +10,16 @@
     </div>
   </section>
 
-  <section class="hero is-dark is-medium">
+  <section class="hero is-dark">
     <div class="hero-body">
-      <div class="container max-500">
+      <div class="container mw-500 pb-1">
         <b-tabs v-model="activeTab" size="is-medium" type="is-toggle" expanded>
           <b-tab-item label="Logga in">
-            <LoginForm></LoginForm>
+            <LoginForm :activeTab="activeTab"></LoginForm>
           </b-tab-item>
 
           <b-tab-item label="Registrera">
-            <RegisterForm></RegisterForm>
+            <RegisterForm :activeTab="activeTab"></RegisterForm>
           </b-tab-item>
         </b-tabs>
       </div>
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style scoped>
-.max-500 {
+.mw-500 {
   max-width: 500px;
 }
 </style>

@@ -12,8 +12,14 @@
 
     <section class="hero is-dark">
       <div class="hero-body">
-        <div class="container mw-500 pb-1">
-          <div class="tabs is-toggle is-medium is-fullwidth">
+        <div class="container mw-500">
+
+          <div v-show="newUserCreated" class="notification is-success">
+            <button @click="newUserCreated=false" class="delete"></button>
+            Ditt konto har nu skapats och du kan logga in. I framtiden kommer kontoaktivering via email att implementeras.
+          </div>
+
+          <div class="tabs is-toggle is-medium is-fullwidth mt-2">
             <ul>
               <router-link to="/auth/login" tag="li">
                 <a>Login</a>
@@ -39,7 +45,18 @@
 import Footer from '../components/Footer';
 
 export default {
-  components: { Footer }
+  components: { Footer },
+  data() {
+    return {
+      newUserCreated: false
+    };
+  },
+
+  created() {
+    this.$on('LOGIN_NEW_REGISTRATION', function() {
+      this.newUserCreated = true;
+    });
+  }
 };
 </script>
 

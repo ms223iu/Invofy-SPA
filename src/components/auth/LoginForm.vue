@@ -3,7 +3,7 @@
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoggingIn">
+        <input v-model="form.email" v-validate="'email|required'" data-vv-delay="200" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoggingIn">
         <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
       </p>
     </div>
@@ -11,11 +11,11 @@
     <div class="field">
       <label class="label">Lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" @keyup.enter="login()" :disabled="isLoggingIn">
+        <input v-model="form.password" v-validate="'min:8|required'" data-vv-delay="200" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" @keyup.enter="login()" :disabled="isLoggingIn">
         <span v-show="errors.has('lösenord')" class="help is-danger">{{ errors.first('lösenord') }}</span>
       </p>
     </div>
-    <a href="#" :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-2 is-centered is-medium is-active is-outlined']" @click="login()">Logga in</a>
+    <a href="#" :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-active is-outlined']" @click="login()">Logga in</a>
   </div>
 </template>
 
@@ -60,7 +60,6 @@ export default {
         })
         .then(response => {
           EventBus.$emit('AUTH_LOGIN', response.data.token);
-          console.log('Then: Success');
         })
         .catch(err => {
           const status = err.response.status;
@@ -77,17 +76,19 @@ export default {
           } else {
             this.showErrorToast('Något gick fel. Försök igen senare');
           }
-
-          console.log('Catch');
         })
         .finally(() => {
-          console.log('Finally');
           this.isLoggingIn = false;
           this.form.email = '';
           this.form.password = '';
         })
         .then(() => {
-          this.$refs.email.focus();
+          this.$validator.pause();
+
+          setTimeout(() => {
+            this.$validator.resume();
+            this.$refs.email.focus();
+          }, 210);
           this.errors.clear();
         });
     }

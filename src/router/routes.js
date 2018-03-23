@@ -9,6 +9,8 @@ import AddInvoice from '../components/dashboard/AddInvoice.vue';
 import AddressList from '../components/dashboard/AddressList.vue';
 import AddAddress from '../components/dashboard/AddAddress.vue';
 
+import LoginForm from '../components/auth/LoginForm';
+import RegisterForm from '../components/auth/RegisterForm';
 
 export default [
   {
@@ -16,8 +18,19 @@ export default [
     component: Home
   },
   {
-    path: '/login',
+    path: '/auth',
+    redirect: '/auth/login',
     component: Login,
+    children: [
+      {
+        path: 'login',
+        component: LoginForm,
+      },
+      {
+        path: 'register',
+        component: RegisterForm
+      }
+    ],
   },
   {
     path: '/dashboard',

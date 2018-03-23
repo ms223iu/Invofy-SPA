@@ -3,7 +3,7 @@
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.email" v-validate="'email|required'" data-vv-delay="250" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoggingIn" autofocus>
+        <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoggingIn">
         <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
       </p>
     </div>
@@ -28,7 +28,6 @@ export default {
   data() {
     return {
       isLoggingIn: false,
-      loginSuccess: false,
       form: {
         email: '',
         password: ''
@@ -37,7 +36,9 @@ export default {
   },
 
   mounted() {
-    this.$refs.email.focus();
+    setTimeout(() => {
+      this.$refs.email.focus();
+    }, 200);
   },
 
   methods: {
@@ -59,6 +60,7 @@ export default {
         })
         .then(response => {
           EventBus.$emit('AUTH_LOGIN', response.data.token);
+          console.log('Then: Success');
         })
         .catch(err => {
           const status = err.response.status;
@@ -75,8 +77,11 @@ export default {
           } else {
             this.showErrorToast('Något gick fel. Försök igen senare');
           }
+
+          console.log('Catch');
         })
         .finally(() => {
+          console.log('Finally');
           this.isLoggingIn = false;
           this.form.email = '';
           this.form.password = '';
@@ -85,11 +90,6 @@ export default {
           this.$refs.email.focus();
           this.errors.clear();
         });
-    },
-
-    clearInputs() {
-      this.form.email = '';
-      this.form.password = '';
     }
   }
 };

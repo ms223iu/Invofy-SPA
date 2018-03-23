@@ -3,7 +3,7 @@
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.email" v-validate="'email|required'" data-vv-delay="250" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoading">
+        <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoading">
         <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
       </p>
     </div>
@@ -45,7 +45,9 @@ export default {
   },
 
   mounted() {
-    this.$refs.email.focus();
+    setTimeout(() => {
+      this.$refs.email.focus();
+    }, 200);
   },
 
   methods: {
@@ -69,9 +71,6 @@ export default {
           this.showSuccessToast(
             'Ditt konto har blivit skapad. Du kan nu logga in! :)'
           );
-
-          //EventBus.$emit('AUTH_LOGIN', response.data.token);
-          //this.loginSuccess = true;
         })
         .catch(err => {
           const status = err.response.status;
@@ -86,18 +85,15 @@ export default {
         })
         .finally(() => {
           this.isLoading = false;
+          this.form.email = '';
+          this.form.password = '';
+          this.form.confirmedPassword = '';
           this.$refs.email.focus();
-          this.clearInputs();
         })
         .then(() => {
+          this.$refs.email.focus();
           this.errors.clear();
         });
-    },
-
-    clearInputs() {
-      this.form.email = '';
-      this.form.password = '';
-      this.form.confirmedPassword = '';
     }
   }
 };

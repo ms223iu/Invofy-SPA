@@ -15,17 +15,18 @@
         <div class="container mw-500 pb-1">
           <div class="tabs is-toggle is-medium is-fullwidth">
             <ul>
-              <li :class="{'is-active' : activeTab == 0}" @click="activeTab=0">
+              <router-link to="/auth/login" tag="li">
                 <a>Login</a>
-              </li>
-              <li :class="{'is-active' : activeTab == 1}">
-                <a @click="activeTab=1">Register</a>
-              </li>
+              </router-link>
+              <router-link to="/auth/register" tag="li">
+                <a>Register</a>
+              </router-link>
             </ul>
           </div>
 
-          <LoginForm v-if="activeTab==0"></LoginForm>
-          <RegisterForm v-if="activeTab==1"></RegisterForm>
+          <transition name="fade" mode="out-in">
+            <router-view></router-view>
+          </transition>
         </div>
       </div>
     </section>
@@ -35,17 +36,10 @@
 </template>
 
 <script>
-import LoginForm from '../components/auth/LoginForm';
-import RegisterForm from '../components/auth/RegisterForm';
 import Footer from '../components/Footer';
 
 export default {
-  components: { LoginForm, RegisterForm, Footer },
-  data() {
-    return {
-      activeTab: 0
-    };
-  }
+  components: { Footer }
 };
 </script>
 

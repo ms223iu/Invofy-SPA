@@ -33,6 +33,9 @@ $link-invert: $info-invert;
 $link-hover: $info;
 $link-focus-border: $primary;
 
+// Forms settings
+$help-size: 0.9rem;
+
 // Import Bulma and Buefy styles
 @import '~bulma';
 @import '~buefy/src/scss/buefy';

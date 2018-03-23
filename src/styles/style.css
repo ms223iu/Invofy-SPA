@@ -1,16 +1,16 @@
 /* Helpers */
-.mt-2 {
-  margin-top: 20px;
+.mt-1 {
+  margin-top: 1rem;
 }
 
 /* Transitions */
 .fade-enter-active, .fade-leave-active {
   transition-property: opacity;
-  transition-duration: 0.2s;
+  transition-duration: 0.15s;
 }
 
 .fade-enter-active {
-  transition-delay: 0.2s;
+  transition-delay: 0.15s;
 }
 
 .fade-enter, .fade-leave-active {

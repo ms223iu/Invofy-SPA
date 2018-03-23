@@ -19,7 +19,7 @@
 
       <div class="navbar-end">
         <a v-if="isAuthenticated" class="navbar-item" @click="isActive=false, logout()">Logga ut</a>
-        <router-link v-else to="/login" class="navbar-item" @click.native="isActive=false">Logga in</router-link>
+        <router-link v-else to="/auth" class="navbar-item" @click.native="isActive=false">Logga in</router-link>
       </div>
     </div>
   </nav>

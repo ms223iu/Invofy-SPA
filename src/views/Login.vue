@@ -1,52 +1,67 @@
 <template>
-<div>
-  <section class="hero is-info">
-    <div class="hero-body">
-      <div class="container has-text-centered">
-        <h1 class="title">
-          Logga in eller skapa ett konto
-        </h1>
+  <div>
+    <section class="hero is-info">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">
+            Logga in eller skapa ett konto
+          </h1>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="hero is-dark is-medium">
-    <div class="hero-body">
-      <div class="container max-500">
-        <b-tabs v-model="activeTab" size="is-medium" type="is-toggle" expanded>
-          <b-tab-item label="Logga in">
-            <LoginForm></LoginForm>
-          </b-tab-item>
+    <section class="hero is-dark">
+      <div class="hero-body">
+        <div class="container mw-500">
 
-          <b-tab-item label="Registrera">
-            <RegisterForm></RegisterForm>
-          </b-tab-item>
-        </b-tabs>
+          <div v-show="newUserCreated" class="notification is-success">
+            <button @click="newUserCreated=false" class="delete"></button>
+            Ditt konto har nu skapats och du kan logga in. I framtiden kommer kontoaktivering via email att implementeras.
+          </div>
+
+          <div class="tabs is-toggle is-medium is-fullwidth mt-2">
+            <ul>
+              <router-link to="/auth/login" tag="li">
+                <a>Login</a>
+              </router-link>
+              <router-link to="/auth/register" tag="li">
+                <a>Register</a>
+              </router-link>
+            </ul>
+          </div>
+
+          <transition name="fade" mode="out-in">
+            <router-view></router-view>
+          </transition>
+        </div>
       </div>
-    </div>
-  </section>
-  <Footer></Footer>
-</div>
+    </section>
+
+    <Footer></Footer>
+  </div>
 </template>
 
-
 <script>
-import LoginForm from '../components/auth/LoginForm';
-import RegisterForm from '../components/auth/RegisterForm';
 import Footer from '../components/Footer';
 
 export default {
-  components: { LoginForm, RegisterForm, Footer },
+  components: { Footer },
   data() {
     return {
-      activeTab: 0
+      newUserCreated: false
     };
+  },
+
+  created() {
+    this.$on('LOGIN_NEW_REGISTRATION', function() {
+      this.newUserCreated = true;
+    });
   }
 };
 </script>
 
 <style scoped>
-.max-500 {
+.mw-500 {
   max-width: 500px;
 }
 </style>

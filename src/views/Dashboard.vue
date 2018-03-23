@@ -4,7 +4,7 @@
       <div class="column is-2">
         <Menu></Menu>
       </div>
-      
+
       <div class="column is-10">
         <transition name="fade">
           <router-view></router-view>

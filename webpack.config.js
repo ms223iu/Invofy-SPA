@@ -66,7 +66,7 @@ module.exports = {
     host: "192.168.2.2",
     port: 80,
     proxy: {
-      "/api": "http://192.168.2.2:3000"
+      "/api": "http://127.0.0.1:3000"
     }
   },
   performance: {

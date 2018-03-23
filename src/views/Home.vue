@@ -2,7 +2,8 @@
   <div>
     <section class="hero is-large bg-img has-extra-height">
       <div class="hero-body">
-        <h2 class="title has-text-centered has-text-light is-size-2 is-uppercase"><span class="is-underline">Invofy</span> är faktureringsappen som du kommer att älska</h2>
+        <h2 class="title has-text-centered has-text-light is-size-2 is-uppercase">
+          <span class="is-underline">Invofy</span> är faktureringsappen som du kommer att älska</h2>
       </div>
     </section>
 

@@ -3,7 +3,7 @@
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoading">
+        <input v-model="form.email" v-validate="'email|required'" data-vv-delay="250" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoading">
         <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
       </p>
     </div>
@@ -24,7 +24,7 @@
       </p>
     </div>
 
-    <a :class="[ isLoading ? 'is-loading' : '', 'button is-info mt-2 is-centered is-medium is-active is-outlined']" @click="register()">Registrera</a>
+    <a href="#" :class="[ isLoading ? 'is-loading' : '', 'button is-info mt-2 is-centered is-medium is-active is-outlined']" @click="register()">Registrera</a>
   </div>
 </template>
 
@@ -33,7 +33,6 @@ import { Toast } from '../../mixins/Toast';
 
 export default {
   mixins: [Toast],
-  props: ['activeTab'],
   data() {
     return {
       isLoading: false,
@@ -43,6 +42,10 @@ export default {
         confirmedPassword: ''
       }
     };
+  },
+
+  mounted() {
+    this.$refs.email.focus();
   },
 
   methods: {
@@ -83,13 +86,18 @@ export default {
         })
         .finally(() => {
           this.isLoading = false;
-          this.form.email = '';
-          this.form.password = '';
-          this.form.confirmedPassword = '';
+          this.$refs.email.focus();
+          this.clearInputs();
         })
         .then(() => {
           this.errors.clear();
         });
+    },
+
+    clearInputs() {
+      this.form.email = '';
+      this.form.password = '';
+      this.form.confirmedPassword = '';
     }
   }
 };

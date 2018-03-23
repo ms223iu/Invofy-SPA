@@ -3,7 +3,7 @@
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoggingIn">
+        <input v-model="form.email" v-validate="'email|required'" data-vv-delay="250" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoggingIn" autofocus>
         <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
       </p>
     </div>
@@ -15,7 +15,7 @@
         <span v-show="errors.has('lösenord')" class="help is-danger">{{ errors.first('lösenord') }}</span>
       </p>
     </div>
-    <a :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-2 is-centered is-medium is-active is-outlined']" @click="login()">Logga in</a>
+    <a href="#" :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-2 is-centered is-medium is-active is-outlined']" @click="login()">Logga in</a>
   </div>
 </template>
 
@@ -25,8 +25,6 @@ import { Toast } from '../../mixins/Toast';
 
 export default {
   mixins: [Toast],
-  props: ['activeTab'],
-
   data() {
     return {
       isLoggingIn: false,
@@ -36,6 +34,10 @@ export default {
         password: ''
       }
     };
+  },
+
+  mounted() {
+    this.$refs.email.focus();
   },
 
   methods: {
@@ -83,6 +85,11 @@ export default {
           this.$refs.email.focus();
           this.errors.clear();
         });
+    },
+
+    clearInputs() {
+      this.form.email = '';
+      this.form.password = '';
     }
   }
 };

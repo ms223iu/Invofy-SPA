@@ -1,6 +1,7 @@
 <template>
   <div>
-    <AddressEntry v-for="(address, index) in addresses" :data="address" :key="index"></AddressEntry>
+    <a href="#" class="button is-success is-fullwidth is-medium mb-1">Lägg till en ny mottagare</a>
+    <AddressEntry v-for="address in addresses" :data.sync="address" :key="address._id"></AddressEntry>
   </div>
 </template>
 
@@ -19,6 +20,12 @@ export default {
 
   created() {
     this.apiGetAddresses();
+
+    this.$on('ADDRESS_REMOVED', id => {
+      this.addresses = this.addresses.filter(function(obj) {
+        return obj._id != id;
+      });
+    });
   },
 
   methods: {

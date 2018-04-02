@@ -86,13 +86,14 @@
           </div>
         </div>
         <hr>
-        <p class="title has-text-centered is-size-4 mb-2">Förhandsgranskning</p>
+        <p class="title has-text-centered is-size-4 mb-1">Förhandsgranskning</p>
       </div>
       <AddressPreview :address="address"></AddressPreview>
     </div>
     <footer class="card-footer">
-      <a v-if="!isEditing" class="card-footer-item has-text-info has-text-weight-semibold" @click="startEdit()">Ändra</a>
-      <a v-if="!isEditing" class="card-footer-item has-text-danger has-text-weight-bold" @click="removeAddress(address._id)">Ta bort</a>
+      <a v-if="isRemoving" class="card-footer-item has-text-success has-text-weight-semibold" @click="cancelRemove()">Avbryt</a>
+      <a v-if="!isEditing && !isRemoving" class="card-footer-item has-text-info has-text-weight-semibold" @click="startEdit()">Ändra</a>
+      <a v-if="!isEditing" class="card-footer-item has-text-danger has-text-weight-bold" @click="removeAddress(address._id)">{{ removeBtnText }}</a>
       <a v-if="isEditing" class="card-footer-item has-text-black has-text-weight-semibold" @click="cancelEdit()">Avbryt</a>
       <a v-if="isEditing" class="card-footer-item has-text-success has-text-weight-bold" @click="saveAddress(address._id)">Spara</a>
     </footer>
@@ -112,7 +113,12 @@ export default {
       isEditing: false,
       isLoading: false,
       address: this.data,
-      addressBackup: null
+      addressBackup: null,
+      removeBtnText: 'Ta bort',
+      safeToRemove: false,
+      isRemoving: false,
+      removeInterval: null,
+      secondsElapsed: 0
     };
   },
 
@@ -142,7 +148,35 @@ export default {
       });
     },
 
-    removeAddress() {},
+    removeAddress(id) {
+      if (!this.safeToRemove && !this.isRemoving) {
+        this.isRemoving = true;
+        this.removeBtnText = 'Är du säker? (5)';
+        this.removeInterval = setInterval(() => {
+          this.removeAddressTimer();
+        }, 1000);
+      } else if (this.safeToRemove) {
+        this.apiDeleteAddress(id);
+      }
+    },
+
+    cancelRemove() {
+      this.isRemoving = false;
+      this.removeBtnText = 'Ta bort';
+      this.secondsElapsed = 0;
+      this.safeToRemove = false;
+      clearInterval(this.removeInterval);
+    },
+
+    removeAddressTimer() {
+      this.secondsElapsed++;
+      this.removeBtnText = 'Är du säker? (' + (5 - this.secondsElapsed) + ')';
+      if (this.secondsElapsed == 5) {
+        this.safeToRemove = true;
+        clearInterval(this.removeInterval);
+        this.removeBtnText = 'Bekräfta';
+      }
+    },
 
     apiUpdateAddress(id) {
       this.isLoading = true;
@@ -165,6 +199,19 @@ export default {
         })
         .finally(() => {
           this.isLoading = false;
+        });
+    },
+
+    apiDeleteAddress(id) {
+      axios
+        .delete('api/address/' + id)
+        .then(response => {
+          this.showSuccessToast('Adress borttagen', 2000);
+          this.$parent.$emit('ADDRESS_REMOVED', id);
+        })
+        .catch(err => {
+          const status = err.response.status;
+          this.showErrorToast('Något gick fel. Försök igen senare');
         });
     }
   }

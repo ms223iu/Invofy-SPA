@@ -7,7 +7,6 @@ import InvoicesList from '../components/dashboard/InvoicesList.vue';
 import AddInvoice from '../components/dashboard/AddInvoice.vue';
 
 import AddressList from '../components/dashboard/AddressList.vue';
-import AddAddress from '../components/dashboard/AddAddress.vue';
 
 import LoginForm from '../components/auth/LoginForm';
 import RegisterForm from '../components/auth/RegisterForm';
@@ -51,10 +50,6 @@ export default [
       {
         path: 'address',
         component: AddressList
-      },
-      {
-        path: 'address/add',
-        component: AddAddress
       }
     ]
   }

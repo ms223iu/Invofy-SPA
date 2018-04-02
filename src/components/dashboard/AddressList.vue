@@ -1,25 +1,39 @@
 <template>
   <div>
-    <a href="#" class="button is-success is-fullwidth is-medium mb-1">Lägg till en ny mottagare</a>
+    <a class="button is-success is-fullwidth is-medium mb-1" @click="newAddressActive=!newAddressActive">Lägg till en ny mottagare</a>
+    <transition name="fade">
+      <AddressNewModal v-if="newAddressActive"></AddressNewModal>
+    </transition>
     <AddressEntry v-for="address in addresses" :data.sync="address" :key="address._id"></AddressEntry>
   </div>
 </template>
 
 <script>
+import AddressNewModal from '../address/AddressNewModal';
 import AddressEntry from '../address/AddressEntry';
 import { Toast } from '../../mixins/Toast';
 
 export default {
-  components: { AddressEntry },
+  components: { AddressNewModal, AddressEntry },
   mixins: [Toast],
   data() {
     return {
-      addresses: null
+      addresses: null,
+      newAddressActive: false
     };
   },
 
   created() {
     this.apiGetAddresses();
+
+    this.$on('ADDRESS_MODAL_CLOSE', () => {
+      this.newAddressActive = false;
+    });
+
+    this.$on('ADDRESS_MODAL_SAVE', address => {
+      this.addresses.push(address);
+      this.newAddressActive = false;
+    });
 
     this.$on('ADDRESS_REMOVED', id => {
       this.addresses = this.addresses.filter(function(obj) {

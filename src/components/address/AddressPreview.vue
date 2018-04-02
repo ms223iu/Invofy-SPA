@@ -18,6 +18,10 @@
         <td>{{ address.post }}</td>
       </tr>
       <tr>
+        <td>Stad</td>
+        <td>{{ address.city }}</td>
+      </tr>
+      <tr>
         <td>Land</td>
         <td>{{ address.country }}</td>
       </tr>

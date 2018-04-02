@@ -70,6 +70,7 @@ export default {
         })
         .then(response => {
           this.successRegistration = true;
+          this.showSuccessToast('Adress skapades');
         })
         .catch(err => {
           const status = err.response.status;

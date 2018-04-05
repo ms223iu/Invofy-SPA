@@ -63,8 +63,8 @@ export default {
 
 <style scoped>
 .navbar-label {
-  font-size: 0.71rem;
-  padding-left: 1.1rem;
+  font-size: 0.72rem;
+  padding: 0.4rem 0 0.4rem 1.1rem;
   letter-spacing: 1px;
 }
 </style>

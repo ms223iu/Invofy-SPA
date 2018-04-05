@@ -19,6 +19,7 @@
         <div v-if="isAuthenticated" class="navbar-item has-dropdown is-hoverable is-hidden-desktop">
           <div class="navbar-dropdown">
             <template v-for="(entry, index) in menuItems">
+              <p class="navbar-label" :key="index">{{ entry.category }}</p>
               <router-link class="navbar-item" v-for="(item, i) in entry.items" :to="item.to" :key="(10*(index+1))+i" @click.native="isActive=false" exact>{{ item.name }}</router-link>
             </template>
           </div>
@@ -61,8 +62,9 @@ export default {
 </script>
 
 <style scoped>
-.divider {
-  margin: 0;
-  padding: 0;
+.navbar-label {
+  font-size: 0.71rem;
+  padding-left: 1.1rem;
+  letter-spacing: 1px;
 }
 </style>

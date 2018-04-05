@@ -1,11 +1,11 @@
 <template>
   <section class="section">
     <div class="columns">
-      <div class="column is-2">
+      <div class="column is-narrow is-hidden-touch">
         <Menu></Menu>
       </div>
 
-      <div class="column is-10">
+      <div class="column">
         <transition name="fade">
           <router-view></router-view>
         </transition>

@@ -16,13 +16,13 @@
         <router-link to="/" class="navbar-item" @click.native="isActive=false" exact>Hem</router-link>
         <router-link v-if="isAuthenticated" to="/dashboard" class="navbar-item is-hidden-touch" @click.native="isActive=false">Kontrollpanel</router-link>
 
-        <div v-if="isAuthenticated" class="navbar-item has-dropdown is-hoverable is-hidden-desktop">
-          <div class="navbar-dropdown">
-            <template v-for="(entry, index) in menuItems">
-              <p class="navbar-label" :key="index">{{ entry.category }}</p>
-              <router-link class="navbar-item" v-for="(item, i) in entry.items" :to="item.to" :key="(10*(index+1))+i" @click.native="isActive=false" exact>{{ item.name }}</router-link>
-            </template>
-          </div>
+        <div v-if="isAuthenticated" class="is-hidden-desktop">
+          <hr class="separator">
+          <template v-for="(entry, index) in menuItems">
+            <p class="navbar-label" :key="index">{{ entry.category }}</p>
+            <router-link class="navbar-item navbar-control-item" v-for="(item, i) in entry.items" :to="item.to" :key="(10*(index+1))+i" @click.native="isActive=false" exact>{{ item.name }}</router-link>
+          </template>
+          <hr class="separator">
         </div>
       </div>
 
@@ -36,7 +36,6 @@
 
 <script>
 import { DashboardMenuItems } from '../mixins/DashboardMenuItems';
-
 import { EventBus } from '../event-bus';
 
 export default {
@@ -63,8 +62,18 @@ export default {
 
 <style scoped>
 .navbar-label {
-  font-size: 0.72rem;
-  padding: 0.4rem 0 0.4rem 1.1rem;
+  color: #4a4a4a;
+  font-size: 0.75rem;
+  padding: 0.5rem 0 0.4rem 1.4rem;
   letter-spacing: 1px;
+}
+
+.navbar-control-item {
+  padding-left: 1.8rem;
+}
+
+.separator {
+  padding: 0;
+  margin: 0.4rem 0;
 }
 </style>

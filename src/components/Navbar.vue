@@ -13,13 +13,13 @@
 
     <div :class="[isActive ? 'is-active' : '', 'navbar-menu']">
       <div class="navbar-start">
-        <router-link to="/" class="navbar-item" @click.native="isActive=false">Hem</router-link>
+        <router-link to="/" class="navbar-item" @click.native="isActive=false" exact>Hem</router-link>
         <router-link v-if="isAuthenticated" to="/dashboard" class="navbar-item is-hidden-touch" @click.native="isActive=false">Kontrollpanel</router-link>
 
         <div v-if="isAuthenticated" class="navbar-item has-dropdown is-hoverable is-hidden-desktop">
           <div class="navbar-dropdown">
             <template v-for="(entry, index) in menuItems">
-              <router-link class="navbar-item" v-for="(item, i) in entry.items" :to="item.to" :key="(10*(index+1))+i" @click.native="isActive=false">{{ item.name }}</router-link>
+              <router-link class="navbar-item" v-for="(item, i) in entry.items" :to="item.to" :key="(10*(index+1))+i" @click.native="isActive=false" exact>{{ item.name }}</router-link>
             </template>
           </div>
         </div>

@@ -23,7 +23,7 @@ export var DashboardMenuItems = {
               to: '/dashboard/address'
             },
             {
-              name: 'Skapa en mottagare',
+              name: 'Lägg till en mottagare',
               to: '/dashboard/address/add'
             }
           ]

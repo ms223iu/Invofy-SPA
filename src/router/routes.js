@@ -1,12 +1,13 @@
 import store from '../store';
-import Home from '../views/Home.vue';
-import Login from '../views/Login.vue';
-import Dashboard from '../views/Dashboard.vue';
+import Home from '../views/Home';
+import Login from '../views/Login';
+import Dashboard from '../views/Dashboard';
 
-import InvoicesList from '../components/dashboard/InvoicesList.vue';
-import AddInvoice from '../components/dashboard/AddInvoice.vue';
+import InvoicesList from '../components/dashboard/InvoicesList';
+import AddInvoice from '../components/dashboard/AddInvoice';
 
-import AddressList from '../components/dashboard/AddressList.vue';
+import AddressList from '../components/dashboard/AddressList';
+import AddAddress from '../components/dashboard/AddAddress';
 
 import LoginForm from '../components/auth/LoginForm';
 import RegisterForm from '../components/auth/RegisterForm';
@@ -50,6 +51,10 @@ export default [
       {
         path: 'address',
         component: AddressList
+      },
+      {
+        path: 'address/add',
+        component: AddAddress
       }
     ]
   }

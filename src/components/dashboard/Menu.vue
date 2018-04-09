@@ -1,35 +1,21 @@
 <template>
   <aside class="menu">
-    <p class="menu-label">Fakturor</p>
     <ul class="menu-list">
-      <li>
-        <router-link to="/dashboard/invoice">Mina Fakturor</router-link>
-      </li>
-      <li>
-        <router-link to="/dashboard/invoice/add">Ny Faktura</router-link>
-      </li>
-    </ul>
-    <p class="menu-label">Mottagare</p>
-    <ul class="menu-list">
-      <li>
-        <router-link to="/dashboard/address">Mina Mottagare</router-link>
-      </li>
-    </ul>
-    <p class="menu-label">Inställningar</p>
-    <ul class="menu-list">
-      <li>
-        <router-link to="#">Mitt Företag</router-link>
-      </li>
+      <template v-for="(entry, index) in menuItems">
+        <p class="menu-label" :key="index">{{ entry.category }}</p>
+        <router-link v-for="(item, i) in entry.items" :to="item.to" :key="(10*(index+1))+i" exact>{{ item.name }}</router-link>
+      </template>
     </ul>
   </aside>
 </template>
 
 <script>
-export default {};
+import { DashboardMenuItems } from '../../mixins/DashboardMenuItems';
+export default {
+  mixins: [DashboardMenuItems]
+};
 </script>
 
 <style>
-/*.menu-list a.is-active {
-  background-color: #4a4a4a;
-}*/
+
 </style>

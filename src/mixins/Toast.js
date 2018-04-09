@@ -1,6 +1,12 @@
-export var Toast = {
+export let Toast = {
+  data() {
+    return {
+      defaultDuration: 3000
+    };
+  },
+
   methods: {
-    showSuccessToast: function (message, duration = 3000) {
+    showSuccessToast(message, duration = this.defaultDuration) {
       this.$toast.open({
         message: message,
         duration: duration,
@@ -8,7 +14,7 @@ export var Toast = {
       });
     },
 
-    showErrorToast: function (message, duration = 3000) {
+    showErrorToast(message, duration = this.defaultDuration) {
       this.$toast.open({
         message: message,
         duration: duration,

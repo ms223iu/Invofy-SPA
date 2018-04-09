@@ -3,15 +3,14 @@
     <AddressInputForm :isLoading="isLoading" @response="response" @addressChanged="addressChanged"></AddressInputForm>
 
     <hr>
-    <AddressPreview v-show="address" :address="address"></AddressPreview>
+    <AddressPreview :address="address"></AddressPreview>
     <hr>
 
     <div class="is-pulled-right">
-      <button class="button is-info is-medium" @click="clear()">Rensa</button>
-      <button class="button is-success is-medium" @click="save()">Lägg till mottagare ({{ isLoading }})</button>
+      <button :class="[isLoading ? 'is-loading': '', 'button is-info is-medium']" @click="clear()">Rensa</button>
+      <button :class="[isLoading ? 'is-loading': '', 'button is-success is-medium']" @click="save()">Lägg till mottagare</button>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -37,11 +36,11 @@ export default {
     },
 
     clear() {
+      this.address = {};
       EventBus.$emit('ADDRESS_INPUT_CLEAR');
     },
 
     response(result) {
-      this.isLoading = true;
       this.apiCreateAddress(result);
     },
 
@@ -50,6 +49,8 @@ export default {
     },
 
     apiCreateAddress(address) {
+      this.isLoading = true;
+
       axios
         .post('api/address', address)
         .then(response => {

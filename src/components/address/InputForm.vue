@@ -82,11 +82,11 @@
 import { EventBus } from '../../event-bus';
 
 export default {
-  props: ['isLoading'],
+  props: ['isLoading', 'data'],
 
   data() {
     return {
-      address: {}
+      address: this.data || {}
     };
   },
 
@@ -100,10 +100,15 @@ export default {
     });
   },
 
+  watch: {
+    /*data() {
+      this.address = this.data;
+    }*/
+  },
+
   methods: {
     validateForm() {
       this.$validator.validateAll().then(result => {
-        console.log('validated');
         if (!result) return;
 
         this.$emit('response', this.address);

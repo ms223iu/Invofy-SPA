@@ -1,10 +1,6 @@
 <template>
   <div>
-    <!--<a class="button is-success is-fullwidth is-medium mb-1" @click="newAddressActive=!newAddressActive">Lägg till en ny mottagare</a>
-    <transition name="fade">
-      <AddressNewModal v-if="newAddressActive"></AddressNewModal>
-    </transition>-->
-    <AddressEntry v-for="address in addresses" :data.sync="address" :key="address._id"></AddressEntry>
+    <AddressEntry v-for="address in addresses" :data="address" :key="address._id" @addressRemoved="addressRemoved"></AddressEntry>
   </div>
 </template>
 
@@ -17,31 +13,21 @@ export default {
   mixins: [Toast],
   data() {
     return {
-      addresses: null,
-      newAddressActive: false
+      addresses: null
     };
   },
 
   created() {
     this.apiGetAddresses();
-
-    this.$on('ADDRESS_MODAL_CLOSE', () => {
-      this.newAddressActive = false;
-    });
-
-    this.$on('ADDRESS_MODAL_SAVE', address => {
-      this.addresses.push(address);
-      this.newAddressActive = false;
-    });
-
-    this.$on('ADDRESS_REMOVED', id => {
-      this.addresses = this.addresses.filter(function(obj) {
-        return obj._id != id;
-      });
-    });
   },
 
   methods: {
+    addressRemoved(id) {
+      this.addresses = this.addresses.filter(function(obj) {
+        return obj._id != id;
+      });
+    },
+
     apiGetAddresses() {
       axios
         .get('api/address')
@@ -49,7 +35,7 @@ export default {
           this.addresses = response.data;
         })
         .catch(error => {
-          console.log('Catch from list: ' + error);
+          this.showErrorToast('Något gick fel. Försök igen senare');
         });
     }
   }

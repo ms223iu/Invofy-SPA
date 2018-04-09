@@ -1,9 +1,11 @@
 <template>
   <div>
     <AddressInputForm :isLoading="isLoading" @response="response" @addressChanged="addressChanged"></AddressInputForm>
+
     <hr>
-    <AddressPreview :address="address"></AddressPreview>
+    <AddressPreview v-show="address" :address="address"></AddressPreview>
     <hr>
+
     <div class="is-pulled-right">
       <button class="button is-info is-medium" @click="clear()">Rensa</button>
       <button class="button is-success is-medium" @click="save()">Lägg till mottagare ({{ isLoading }})</button>
@@ -16,7 +18,7 @@
 import { EventBus } from '../../event-bus';
 import { Toast } from '../../mixins/Toast';
 import AddressInputForm from '../address/InputForm';
-import AddressPreview from '../address/AddressPreview';
+import AddressPreview from '../address/Preview';
 
 export default {
   components: { AddressInputForm, AddressPreview },

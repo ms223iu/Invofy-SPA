@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import AddressPreview from '../address/AddressPreview';
+import AddressPreview from '../address/Preview';
 import { Toast } from '../../mixins/Toast';
 export default {
   components: { AddressPreview },

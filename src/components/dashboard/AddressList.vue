@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import AddressEntry from '../address/AddressEntry';
+import AddressEntry from '../address/Entry';
 import { Toast } from '../../mixins/Toast';
 
 export default {

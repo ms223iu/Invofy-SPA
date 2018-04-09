@@ -220,6 +220,6 @@ export default {
 
 <style scoped>
 .label {
-  color: black;
+  color: #4a4a4a;
 }
 </style>

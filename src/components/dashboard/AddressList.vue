@@ -1,20 +1,19 @@
 <template>
   <div>
-    <a class="button is-success is-fullwidth is-medium mb-1" @click="newAddressActive=!newAddressActive">Lägg till en ny mottagare</a>
+    <!--<a class="button is-success is-fullwidth is-medium mb-1" @click="newAddressActive=!newAddressActive">Lägg till en ny mottagare</a>
     <transition name="fade">
       <AddressNewModal v-if="newAddressActive"></AddressNewModal>
-    </transition>
+    </transition>-->
     <AddressEntry v-for="address in addresses" :data.sync="address" :key="address._id"></AddressEntry>
   </div>
 </template>
 
 <script>
-import AddressNewModal from '../address/AddressNewModal';
 import AddressEntry from '../address/AddressEntry';
 import { Toast } from '../../mixins/Toast';
 
 export default {
-  components: { AddressNewModal, AddressEntry },
+  components: { AddressEntry },
   mixins: [Toast],
   data() {
     return {

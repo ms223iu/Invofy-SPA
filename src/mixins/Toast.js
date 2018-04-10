@@ -1,7 +1,7 @@
 export let Toast = {
   data() {
     return {
-      defaultDuration: 3000
+      defaultDuration: 2500
     };
   },
 

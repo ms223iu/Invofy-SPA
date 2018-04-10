@@ -12,7 +12,6 @@
 
 <script>
 import Navbar from './components/Navbar.vue';
-import { EventBus } from './event-bus';
 import { Toast } from './mixins/Toast';
 
 export default {

@@ -22,16 +22,16 @@
           <div class="tabs is-toggle is-medium is-fullwidth mt-2">
             <ul>
               <router-link to="/auth/login" tag="li">
-                <a>Login</a>
+                <a>Logga in</a>
               </router-link>
               <router-link to="/auth/register" tag="li">
-                <a>Register</a>
+                <a>Registrera</a>
               </router-link>
             </ul>
           </div>
 
           <transition name="fade" mode="out-in">
-            <router-view @newUserCreated="newUserCreated" @login="login" @register="register"></router-view>
+            <router-view @login="login" @register="register"></router-view>
           </transition>
         </div>
       </div>
@@ -71,10 +71,6 @@ export default {
       this.newUser = false;
     },
 
-    newUserCreated() {
-      this.newUser = true;
-    },
-
     login(token) {
       this.showSuccessToast('Du har blivit inloggad. Välkommen');
       this.$store.commit('SET_AUTHENTICATED', true);
@@ -85,7 +81,8 @@ export default {
     logout() {},
 
     register() {
-      console.log('user created');
+      this.newUser = true;
+      this.$router.push('/auth/login');
     }
   }
 };

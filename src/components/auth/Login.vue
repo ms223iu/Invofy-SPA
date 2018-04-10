@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @keyup.enter="login()">
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
@@ -11,7 +11,7 @@
     <div class="field">
       <label class="label">Lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" @keyup.enter="login()" :readonly="isLoggingIn">
+        <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" :readonly="isLoggingIn">
         <span v-show="errors.has('lösenord')" class="help is-danger">{{ errors.first('lösenord') }}</span>
       </p>
     </div>
@@ -21,9 +21,10 @@
 
 <script>
 import { Toast } from '../../mixins/Toast';
+import { Focus } from '../../mixins/Focus';
 
 export default {
-  mixins: [Toast],
+  mixins: [Toast, Focus],
   data() {
     return {
       isLoggingIn: false,
@@ -37,7 +38,10 @@ export default {
   methods: {
     login() {
       this.$validator.validateAll().then(result => {
-        if (!result) return;
+        if (!result) {
+          this.focusOnValidationError(this.$el);
+          return;
+        }
 
         this.isLoggingIn = true;
         this.apiLogin();
@@ -60,7 +64,7 @@ export default {
               5000
             );
           } else if (status == 403) {
-            this.showErrorToast('Felaktig email eller lösenord');
+            this.showErrorToast('Felaktigt lösenord');
           } else if (status == 404) {
             this.showErrorToast('Ingen konto är kopplad till detta mejlet');
           } else {

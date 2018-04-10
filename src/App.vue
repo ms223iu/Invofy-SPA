@@ -22,33 +22,9 @@ export default {
 
   beforeMount() {
     if (this.$cookie.get('token')) {
-      EventBus.$emit('AUTH_LOGIN');
+      this.$store.commit('SET_AUTHENTICATED', true);
+      this.showSuccessToast('Välkommen tillbaka');
     }
-  },
-
-  created() {
-    EventBus.$on('AUTH_LOGIN', token => {
-      if (token) {
-        // User just logged in with credentials
-        this.showSuccessToast('Du har blivit inloggad. Välkommen');
-        this.$store.commit('SET_AUTHENTICATED', true);
-        this.$cookie.set('token', token);
-        this.$router.push('/dashboard/invoice');
-      } else {
-        // Token was found in a cookie
-        this.$store.commit('SET_AUTHENTICATED', true);
-        this.showSuccessToast('Välkommen tillbaka');
-      }
-    });
-
-    EventBus.$on('AUTH_LOGOUT', () => {
-      this.showSuccessToast(
-        'Du har blivit utloggad. Tack för att du är kund hos oss'
-      );
-      this.$store.commit('SET_AUTHENTICATED', false);
-      this.$cookie.delete('token');
-      this.$router.push('/');
-    });
   },
 
   methods: {

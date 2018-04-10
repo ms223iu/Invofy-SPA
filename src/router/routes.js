@@ -1,6 +1,6 @@
 import store from '../store';
 import Home from '../views/Home';
-import Login from '../views/Login';
+import Auth from '../views/Auth';
 import Dashboard from '../views/Dashboard';
 
 import InvoicesList from '../components/dashboard/InvoicesList';
@@ -9,8 +9,8 @@ import AddInvoice from '../components/dashboard/AddInvoice';
 import AddressList from '../components/dashboard/AddressList';
 import AddAddress from '../components/dashboard/AddAddress';
 
-import LoginForm from '../components/auth/LoginForm';
-import RegisterForm from '../components/auth/RegisterForm';
+import Login from '../components/auth/Login';
+import Register from '../components/auth/Register';
 
 export default [
   {
@@ -20,15 +20,15 @@ export default [
   {
     path: '/auth',
     redirect: '/auth/login',
-    component: Login,
+    component: Auth,
     children: [
       {
         path: 'login',
-        component: LoginForm,
+        component: Login,
       },
       {
         path: 'register',
-        component: RegisterForm
+        component: Register
       }
     ],
   },

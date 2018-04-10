@@ -14,8 +14,8 @@
       <div class="hero-body">
         <div class="container mw-500">
 
-          <div v-show="newUserCreated" class="notification is-success">
-            <button @click="newUserCreated=false" class="delete"></button>
+          <div v-show="newUser" class="notification is-success">
+            <button @click="closeNotification()" class="delete"></button>
             Ditt konto har nu skapats och du kan logga in. I framtiden kommer kontoaktivering via email att implementeras.
           </div>
 
@@ -31,7 +31,7 @@
           </div>
 
           <transition name="fade" mode="out-in">
-            <router-view></router-view>
+            <router-view @newUserCreated="newUserCreated" @login="login" @register="register"></router-view>
           </transition>
         </div>
       </div>
@@ -42,26 +42,51 @@
 </template>
 
 <script>
+import { EventBus } from '../event-bus';
+import { Toast } from '../mixins/Toast';
 import Footer from '../components/Footer';
 
 export default {
   components: { Footer },
+  mixins: [Toast],
   data() {
     return {
-      newUserCreated: false
+      newUser: false
     };
   },
 
   created() {
-    this.$on('LOGIN_NEW_REGISTRATION', function() {
-      this.newUserCreated = true;
+    EventBus.$on('AUTH_LOGOUT', () => {
+      this.showSuccessToast(
+        'Du har blivit utloggad. Tack för att du är kund hos oss'
+      );
+      this.$store.commit('SET_AUTHENTICATED', false);
+      this.$cookie.delete('token');
+      this.$router.push('/');
     });
+  },
+
+  methods: {
+    closeNotification() {
+      this.newUser = false;
+    },
+
+    newUserCreated() {
+      this.newUser = true;
+    },
+
+    login(token) {
+      this.showSuccessToast('Du har blivit inloggad. Välkommen');
+      this.$store.commit('SET_AUTHENTICATED', true);
+      this.$cookie.set('token', token);
+      this.$router.push('/dashboard/invoice');
+    },
+
+    logout() {},
+
+    register() {
+      console.log('user created');
+    }
   }
 };
 </script>
-
-<style scoped>
-.mw-500 {
-  max-width: 500px;
-}
-</style>

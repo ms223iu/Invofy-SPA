@@ -93,7 +93,8 @@ export default {
           // If user was successfully registered emit event to parent
           // else clear fields and focus on input
           if (this.successRegistration) {
-            this.$parent.$emit('LOGIN_NEW_REGISTRATION');
+            //this.$parent.$emit('LOGIN_NEW_REGISTRATION');
+            this.$emit('newUserCreated');
             this.$router.push('/auth/login');
           } else {
             this.$validator.pause();

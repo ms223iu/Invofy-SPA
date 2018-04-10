@@ -57,6 +57,9 @@ export default {
         .catch(err => {
           const status = err.response.status;
           this.$refs.email.focus();
+          this.form.email = '';
+          this.form.password = '';
+          this.$validator.reset();
 
           if (status == 401) {
             this.showErrorToast(
@@ -73,9 +76,6 @@ export default {
         })
         .finally(() => {
           this.isLoggingIn = false;
-          this.form.email = '';
-          this.form.password = '';
-          this.$validator.reset();
         });
     }
   }

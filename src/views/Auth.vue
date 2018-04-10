@@ -57,12 +57,7 @@ export default {
 
   created() {
     EventBus.$on('AUTH_LOGOUT', () => {
-      this.showSuccessToast(
-        'Du har blivit utloggad. Tack för att du är kund hos oss'
-      );
-      this.$store.commit('SET_AUTHENTICATED', false);
-      this.$cookie.delete('token');
-      this.$router.push('/');
+      this.logout();
     });
   },
 
@@ -78,7 +73,14 @@ export default {
       this.$router.push('/dashboard/invoice');
     },
 
-    logout() {},
+    logout() {
+      this.showSuccessToast(
+        'Du har blivit utloggad. Tack för att du är kund hos oss'
+      );
+      this.$store.commit('SET_AUTHENTICATED', false);
+      this.$cookie.delete('token');
+      this.$router.push('/');
+    },
 
     register() {
       this.newUser = true;

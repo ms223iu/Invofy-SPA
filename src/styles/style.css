@@ -11,6 +11,10 @@
   margin-bottom: 1rem;
 }
 
+.mw-500 {
+  max-width: 500px;
+}
+
 /* Transitions */
 .fade-enter-active, .fade-leave-active {
   transition-property: opacity;

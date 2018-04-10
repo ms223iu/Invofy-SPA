@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div @keyup.enter="login()">
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.email" v-validate="'email|required'" data-vv-delay="200" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :disabled="isLoggingIn">
+        <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :readonly="isLoggingIn">
         <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
       </p>
     </div>
@@ -11,20 +11,20 @@
     <div class="field">
       <label class="label">Lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.password" v-validate="'min:8|required'" data-vv-delay="200" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" @keyup.enter="login()" :disabled="isLoggingIn">
+        <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" :readonly="isLoggingIn">
         <span v-show="errors.has('lösenord')" class="help is-danger">{{ errors.first('lösenord') }}</span>
       </p>
     </div>
-    <a href="#" :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-active is-outlined']" @click="login()">Logga in</a>
+    <button :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-outlined is-active']" @click="login()">Logga in</button>
   </div>
 </template>
 
 <script>
-import { EventBus } from '../../event-bus';
 import { Toast } from '../../mixins/Toast';
+import { Focus } from '../../mixins/Focus';
 
 export default {
-  mixins: [Toast],
+  mixins: [Toast, Focus],
   data() {
     return {
       isLoggingIn: false,
@@ -35,34 +35,31 @@ export default {
     };
   },
 
-  mounted() {
-    setTimeout(() => {
-      this.$refs.email.focus();
-    }, 200);
-  },
-
   methods: {
     login() {
       this.$validator.validateAll().then(result => {
-        if (!result) return;
+        if (!result) {
+          this.focusOnValidationError(this.$el);
+          return;
+        }
 
+        this.isLoggingIn = true;
         this.apiLogin();
       });
     },
 
     apiLogin() {
-      this.isLoggingIn = true;
-
       axios
-        .post('api/auth', {
-          email: this.form.email,
-          password: this.form.password
-        })
+        .post('api/auth', this.form)
         .then(response => {
-          EventBus.$emit('AUTH_LOGIN', response.data.token);
+          this.$emit('login', response.data.token);
         })
         .catch(err => {
           const status = err.response.status;
+          this.$refs.email.focus();
+          this.form.email = '';
+          this.form.password = '';
+          this.$validator.reset();
 
           if (status == 401) {
             this.showErrorToast(
@@ -70,7 +67,7 @@ export default {
               5000
             );
           } else if (status == 403) {
-            this.showErrorToast('Felaktig email eller lösenord');
+            this.showErrorToast('Felaktigt lösenord');
           } else if (status == 404) {
             this.showErrorToast('Ingen konto är kopplad till detta mejlet');
           } else {
@@ -79,17 +76,6 @@ export default {
         })
         .finally(() => {
           this.isLoggingIn = false;
-          this.form.email = '';
-          this.form.password = '';
-        })
-        .then(() => {
-          this.$validator.pause();
-
-          setTimeout(() => {
-            this.$validator.resume();
-            this.$refs.email.focus();
-          }, 210);
-          this.errors.clear();
         });
     }
   }

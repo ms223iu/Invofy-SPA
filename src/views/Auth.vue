@@ -14,24 +14,24 @@
       <div class="hero-body">
         <div class="container mw-500">
 
-          <div v-show="newUserCreated" class="notification is-success">
-            <button @click="newUserCreated=false" class="delete"></button>
+          <div v-show="newUser" class="notification is-success">
+            <button @click="closeNotification()" class="delete"></button>
             Ditt konto har nu skapats och du kan logga in. I framtiden kommer kontoaktivering via email att implementeras.
           </div>
 
           <div class="tabs is-toggle is-medium is-fullwidth mt-2">
             <ul>
               <router-link to="/auth/login" tag="li">
-                <a>Login</a>
+                <a>Logga in</a>
               </router-link>
               <router-link to="/auth/register" tag="li">
-                <a>Register</a>
+                <a>Registrera</a>
               </router-link>
             </ul>
           </div>
 
           <transition name="fade" mode="out-in">
-            <router-view></router-view>
+            <router-view @login="login" @register="register"></router-view>
           </transition>
         </div>
       </div>
@@ -42,26 +42,35 @@
 </template>
 
 <script>
+import { EventBus } from '../event-bus';
+import { Toast } from '../mixins/Toast';
 import Footer from '../components/Footer';
 
 export default {
   components: { Footer },
+  mixins: [Toast],
   data() {
     return {
-      newUserCreated: false
+      newUser: false
     };
   },
 
-  created() {
-    this.$on('LOGIN_NEW_REGISTRATION', function() {
-      this.newUserCreated = true;
-    });
+  methods: {
+    closeNotification() {
+      this.newUser = false;
+    },
+
+    login(token) {
+      this.showSuccessToast('Du har blivit inloggad. Välkommen');
+      this.$store.commit('SET_AUTHENTICATED', true);
+      this.$cookie.set('token', token);
+      this.$router.push('/dashboard/invoice');
+    },
+
+    register() {
+      this.newUser = true;
+      this.$router.push('/auth/login');
+    }
   }
 };
 </script>
-
-<style scoped>
-.mw-500 {
-  max-width: 500px;
-}
-</style>

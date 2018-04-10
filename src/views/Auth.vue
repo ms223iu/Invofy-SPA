@@ -55,12 +55,6 @@ export default {
     };
   },
 
-  created() {
-    EventBus.$on('AUTH_LOGOUT', () => {
-      this.logout();
-    });
-  },
-
   methods: {
     closeNotification() {
       this.newUser = false;
@@ -71,15 +65,6 @@ export default {
       this.$store.commit('SET_AUTHENTICATED', true);
       this.$cookie.set('token', token);
       this.$router.push('/dashboard/invoice');
-    },
-
-    logout() {
-      this.showSuccessToast(
-        'Du har blivit utloggad. Tack för att du är kund hos oss'
-      );
-      this.$store.commit('SET_AUTHENTICATED', false);
-      this.$cookie.delete('token');
-      this.$router.push('/');
     },
 
     register() {

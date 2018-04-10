@@ -11,8 +11,9 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue';
+import { EventBus } from './event-bus';
 import { Toast } from './mixins/Toast';
+import Navbar from './components/Navbar.vue';
 
 export default {
   name: 'app',
@@ -24,6 +25,17 @@ export default {
       this.$store.commit('SET_AUTHENTICATED', true);
       this.showSuccessToast('Välkommen tillbaka');
     }
+  },
+
+  created() {
+    EventBus.$on('AUTH_LOGOUT', () => {
+      this.showSuccessToast(
+        'Du har blivit utloggad. Tack för att du är kund hos oss'
+      );
+      this.$store.commit('SET_AUTHENTICATED', false);
+      this.$cookie.delete('token');
+      this.$router.push('/');
+    });
   },
 
   methods: {

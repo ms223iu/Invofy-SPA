@@ -1,10 +1,9 @@
 <template>
-  <div>
+  <div @keyup.enter="validateForm()">
     <div class="field">
       <label class="label">Visningsnamn</label>
       <p :class="{ 'control': true }">
-        <input v-model="address.displayName" v-validate="'required'" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('visningsnamn')}" name="visningsnamn" type="text" placeholder="visningsnamn" :disabled="isLoading">
-        <span v-show="errors.has('visningsnamn')" class="help is-danger">{{ errors.first('visningsnamn') }}</span>
+        <input v-model="address.displayName" v-validate="'required'" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('visningsnamn')}" name="visningsnamn" type="text" placeholder="visningsnamn" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
       </p>
     </div>
 
@@ -13,32 +12,28 @@
         <div class="field">
           <label class="label">Namn</label>
           <p :class="{ 'control': true }">
-            <input v-model="address.customer" v-validate="'required'" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('namn')}" name="namn" type="text" placeholder="namn" :disabled="isLoading">
-            <span v-show="errors.has('namn')" class="help is-danger">{{ errors.first('namn') }}</span>
+            <input v-model="address.customer" v-validate="'required'" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('namn')}" name="namn" type="text" placeholder="namn" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
 
         <div class="field">
           <label class="label">Adressrad 1</label>
           <p :class="{ 'control': true }">
-            <input v-model="address.addr1" v-validate="'required'" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('adressrad1')}" name="adressrad1" type="text" placeholder="adressrad 1" :disabled="isLoading">
-            <span v-show="errors.has('adressrad1')" class="help is-danger">{{ errors.first('adressrad1') }}</span>
+            <input v-model="address.addr1" v-validate="'required'" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('adressrad1')}" name="adressrad1" type="text" placeholder="adressrad" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
 
         <div class="field">
           <label class="label">Adressrad 2</label>
           <p :class="{ 'control': true }">
-            <input v-model="address.addr2" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('adressrad2')}" name="adressrad2" type="text" placeholder="adressrad 2" :disabled="isLoading">
-            <span v-show="errors.has('adressrad2')" class="help is-danger">{{ errors.first('adressrad2') }}</span>
+            <input v-model="address.addr2" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('adressrad2')}" name="adressrad2" type="text" placeholder="adressrad" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
 
         <div class="field">
           <label class="label">Postnummer</label>
           <p :class="{ 'control': true }">
-            <input v-model="address.post" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('postnummer')}" name="postnummer" type="text" placeholder="postnummer" :disabled="isLoading">
-            <span v-show="errors.has('postnummer')" class="help is-danger">{{ errors.first('postnummer') }}</span>
+            <input v-model="address.post" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('postnummer')}" name="postnummer" type="text" placeholder="postnummer" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
       </div>
@@ -47,30 +42,26 @@
         <div class="field">
           <label class="label">Stad</label>
           <p :class="{ 'control': true }">
-            <input v-model="address.city" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('stad')}" name="stad" type="text" placeholder="stad" :disabled="isLoading">
-            <span v-show="errors.has('stad')" class="help is-danger">{{ errors.first('stad') }}</span>
+            <input v-model="address.city" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('stad')}" name="stad" type="text" placeholder="stad" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
 
         <div class="field">
           <label class="label">Land</label>
           <p :class="{ 'control': true }">
-            <input v-model="address.country" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('land')}" name="land" type="text" placeholder="land" :disabled="isLoading">
-            <span v-show="errors.has('land')" class="help is-danger">{{ errors.first('land') }}</span>
+            <input v-model="address.country" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('land')}" name="land" type="text" placeholder="land" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
         <div class="field">
           <label class="label">Referensrad 1</label>
           <p :class="{ 'control': true }">
-            <input v-model="address.ref1" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('referensrad1')}" name="referensrad1" type="text" placeholder="referensrad 1" :disabled="isLoading">
-            <span v-show="errors.has('referensrad1')" class="help is-danger">{{ errors.first('referensrad1') }}</span>
+            <input v-model="address.ref1" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('referensrad1')}" name="referensrad1" type="text" placeholder="referensrad" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
         <div class="field">
           <label class="label">Referensrad 2</label>
           <p :class="{ 'control': true }">
-            <input v-model="address.ref2" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('referensrad2')}" name="referensrad2" type="text" placeholder="referensrad 2" :disabled="isLoading">
-            <span v-show="errors.has('referensrad2')" class="help is-danger">{{ errors.first('referensrad2') }}</span>
+            <input v-model="address.ref2" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('referensrad2')}" name="referensrad2" type="text" placeholder="referensrad" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
       </div>
@@ -80,10 +71,11 @@
 
 <script>
 import { EventBus } from '../../event-bus';
+import { Focus } from '../../mixins/Focus';
 
 export default {
   props: ['isLoading', 'data'],
-
+  mixins: [Focus],
   data() {
     return {
       address: this.data || {}
@@ -100,16 +92,13 @@ export default {
     });
   },
 
-  watch: {
-    /*data() {
-      this.address = this.data;
-    }*/
-  },
-
   methods: {
     validateForm() {
       this.$validator.validateAll().then(result => {
-        if (!result) return;
+        if (!result) {
+          this.focusOnValidationError(this.$el);
+          return;
+        }
 
         this.$emit('response', this.address);
       });

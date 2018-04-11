@@ -11,8 +11,7 @@
     <div class="field">
       <label class="label">Lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" :readonly="isLoggingIn">
-        <span v-show="errors.has('lösenord')" class="help is-danger">{{ errors.first('lösenord') }}</span>
+        <input v-model="form.password" v-validate="'required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" :readonly="isLoggingIn">
       </p>
     </div>
     <button :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-outlined is-active']" @click="login()">Logga in</button>

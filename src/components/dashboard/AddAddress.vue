@@ -8,7 +8,7 @@
 
     <div class="is-pulled-right">
       <button :class="[isLoading ? 'is-loading': '', 'button is-info is-medium']" @click="clear()">Rensa</button>
-      <button :class="[isLoading ? 'is-loading': '', 'button is-success is-medium']" @click="save()">Lägg till mottagare</button>
+      <button :class="[isLoading ? 'is-loading': '', 'button is-success is-medium']" @click="save()" :disabled="isLoading">Lägg till mottagare</button>
     </div>
   </div>
 </template>

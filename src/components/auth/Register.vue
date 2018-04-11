@@ -11,16 +11,16 @@
     <div class="field">
       <label class="label">Lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.password" v-validate="'min:8|required|confirmed:repetera-lösenord'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" :readonly="isLoading">
+        <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" :readonly="isLoading">
         <span v-show="errors.has('lösenord')" class="help is-danger">{{ errors.first('lösenord') }}</span>
       </p>
     </div>
 
     <div class="field">
-      <label class="label">Repetera lösenord</label>
+      <label class="label">Bekräfta lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.confirmedPassword" v-validate="'min:8|required|confirmed:lösenord'" :class="{'input is-medium': true, 'is-danger': errors.has('repetera-lösenord')}" name="repetera-lösenord" type="password" placeholder="repetera lösenord" :readonly="isLoading">
-        <span v-show="errors.has('repetera-lösenord')" class="help is-danger">{{ errors.first('repetera-lösenord') }}</span>
+        <input v-model="form.confirmedPassword" v-validate="'required|confirmed:lösenord'" :class="{'input is-medium': true, 'is-danger': errors.has('bekräfta')}" name="bekräfta" type="password" placeholder="lösenord" data-vv-as="bekräfta lösenord" :readonly="isLoading">
+        <span v-show="errors.has('bekräfta')" class="help is-danger">{{ errors.first('bekräfta') }}</span>
       </p>
     </div>
 

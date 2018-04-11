@@ -25,7 +25,7 @@
                 <a>Logga in</a>
               </router-link>
               <router-link to="/auth/register" tag="li">
-                <a>Registrera</a>
+                <a>Skapa ett konto</a>
               </router-link>
             </ul>
           </div>

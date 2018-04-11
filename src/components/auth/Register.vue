@@ -19,8 +19,8 @@
     <div class="field">
       <label class="label">Bekräfta lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.confirmedPassword" v-validate="'required|confirmed:lösenord'" :class="{'input is-medium': true, 'is-danger': errors.has('repetera-lösenord')}" name="bekräfta-lösenord" type="password" placeholder="lösenord" data-vv-as="bekräfta lösenord" :readonly="isLoading">
-        <span v-show="errors.has('bekräfta-lösenord')" class="help is-danger">{{ errors.first('bekräfta-lösenord') }}</span>
+        <input v-model="form.confirmedPassword" v-validate="'required|confirmed:lösenord'" :class="{'input is-medium': true, 'is-danger': errors.has('bekräfta')}" name="bekräfta" type="password" placeholder="lösenord" data-vv-as="bekräfta lösenord" :readonly="isLoading">
+        <span v-show="errors.has('bekräfta')" class="help is-danger">{{ errors.first('bekräfta') }}</span>
       </p>
     </div>
 

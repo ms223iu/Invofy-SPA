@@ -9,12 +9,15 @@ import sv from 'vee-validate/dist/locale/sv';
 import store from './store';
 import App from './App.vue';
 
-Validator.localize('sv', sv);
-
 Vue.use(Vuex);
 Vue.use(VueCookie);
 Vue.use(Buefy);
-Vue.use(VeeValidate);
+
+Validator.localize('sv', sv);
+
+Vue.use(VeeValidate, {
+  events: 'input'
+});
 
 new Vue({
   el: '#app',

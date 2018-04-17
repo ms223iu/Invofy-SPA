@@ -16,6 +16,6 @@ export default {
 
 <style scoped>
 hr {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 </style>

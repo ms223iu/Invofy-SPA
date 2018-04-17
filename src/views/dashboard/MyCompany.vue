@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SectionInfo>Informationen om ditt företag som du ser nedan kommer automatiskt att finnas på alla nya fakturor och den kan inte ändras efter att en faktura har blivit skapad.</SectionInfo>
+    <SectionInfo>Företagsinformation som du ser nedan kommer att finnas automatiskt på alla dina nya fakturor. Vid informationsändring förändras inte infon på befintliga fakturor.</SectionInfo>
     <InputForm></InputForm>
   </div>
 </template>

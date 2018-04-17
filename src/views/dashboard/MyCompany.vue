@@ -1,21 +1,19 @@
 <template>
   <div>
-    <p class="has-text-centered is-size-5">Informationen om ditt företag som du ser kan nedan kommer automatiskt att finnas på alla dina nya fakturor.</p>
-    <hr>
+    <SectionInfo>Informationen om ditt företag som du ser nedan kommer automatiskt att finnas på alla nya fakturor och den kan inte ändras efter att en faktura har blivit skapad.</SectionInfo>
     <InputForm></InputForm>
   </div>
 </template>
 
 <script>
+import SectionInfo from '../../components/dashboard/SectionInfo';
 import InputForm from '../../components/company/InputForm';
 
 export default {
-  components: { InputForm }
+  components: { SectionInfo, InputForm }
 };
 </script>
 
 <style scoped>
-hr {
-  margin-bottom: 2.5rem;
-}
+
 </style>

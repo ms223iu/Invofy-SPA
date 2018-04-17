@@ -36,7 +36,6 @@
             <input v-model="company.country" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('land')}" name="land" type="text" placeholder="land" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="readOnly">
           </p>
         </div>
-
       </div>
 
       <div class="column">
@@ -95,14 +94,12 @@ export default {
     EventBus.$on('COMPANY_INPUT_VALIDATE', () => {
       this.validateForm();
     });
-
-    EventBus.$on('COMPANY_INPUT_CLEAR', () => {
-      this.clearInput();
-    });
   },
 
   methods: {
     validateForm() {
+      if (this.readOnly) return;
+
       this.$validator.validateAll().then(result => {
         if (!result) {
           this.focusOnValidationError(this.$el);

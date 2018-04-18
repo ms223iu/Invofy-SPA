@@ -1,12 +1,13 @@
 <template>
   <div>
+    <SectionInfo>Här kan du lägga till information nya mottagare. Dessa går sedan att använda när du skapar en ny faktura.</SectionInfo>
     <AddressInputForm :isLoading="isLoading" @response="response" @addressChanged="addressChanged"></AddressInputForm>
 
     <hr>
     <AddressPreview :address="address"></AddressPreview>
     <hr>
 
-    <div class="is-pulled-right">
+    <div class="is-pulled-right mb-1">
       <button :class="[isLoading ? 'is-loading': '', 'button is-info is-medium']" @click="clear()">Rensa</button>
       <button :class="[isLoading ? 'is-loading': '', 'button is-success is-medium']" @click="save()" :disabled="isLoading">Lägg till mottagare</button>
     </div>
@@ -18,9 +19,10 @@ import { EventBus } from '../../event-bus';
 import { Toast } from '../../mixins/Toast';
 import AddressInputForm from '../../components/address/InputForm';
 import AddressPreview from '../../components/address/Preview';
+import SectionInfo from '../../components/dashboard/SectionInfo';
 
 export default {
-  components: { AddressInputForm, AddressPreview },
+  components: { SectionInfo, AddressInputForm, AddressPreview },
   mixins: [Toast],
   data() {
     return {

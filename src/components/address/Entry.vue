@@ -27,13 +27,14 @@
 <script>
 import { EventBus } from '../../event-bus';
 import { Toast } from '../../mixins/Toast';
+import { ObjectUtil } from '../../mixins/ObjectUtil';
 import AddressInputForm from '../address/InputForm';
 import AddressPreview from '../address/Preview';
 
 export default {
   components: { AddressPreview, AddressInputForm },
   props: ['data'],
-  mixins: [Toast],
+  mixins: [Toast, ObjectUtil],
 
   data() {
     return {
@@ -66,15 +67,15 @@ export default {
     },
 
     save() {
-      if (JSON.stringify(this.address) === JSON.stringify(this.addressBackup)) {
-        this.cancelEdit();
-        return;
-      }
-
       EventBus.$emit('ADDRESS_INPUT_VALIDATE');
     },
 
     response(response) {
+      if (this.isEqual(this.address, this.addressBackup)) {
+        this.cancelEdit();
+        return;
+      }
+
       this.apiUpdateAddress(response._id);
     },
 

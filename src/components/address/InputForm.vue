@@ -1,7 +1,7 @@
 <template>
   <div @keyup.enter="validateForm()">
-    <div class="field">
-      <label class="label">Visningsnamn</label>
+    <div class="field displayname">
+      <label class="label">Visningsnamn*</label>
       <p :class="{ 'control': true }">
         <input v-model="address.displayName" v-validate="'required'" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('visningsnamn')}" name="visningsnamn" type="text" placeholder="visningsnamn" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
       </p>
@@ -10,14 +10,14 @@
     <div class="columns">
       <div class="column">
         <div class="field">
-          <label class="label">Namn</label>
+          <label class="label">Namn*</label>
           <p :class="{ 'control': true }">
             <input v-model="address.customer" v-validate="'required'" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('namn')}" name="namn" type="text" placeholder="namn" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
 
         <div class="field">
-          <label class="label">Adressrad 1</label>
+          <label class="label">Adressrad 1*</label>
           <p :class="{ 'control': true }">
             <input v-model="address.addr1" v-validate="'required'" @input="inputChanged()" :class="{'input': true, 'is-danger': errors.has('adressrad1')}" name="adressrad1" type="text" placeholder="adressrad" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="field">
-          <label class="label">Postnummer</label>
+          <label class="label">Postnummer*</label>
           <p :class="{ 'control': true }">
             <input v-model="address.post" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('postnummer')}" name="postnummer" type="text" placeholder="postnummer" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
@@ -40,14 +40,14 @@
 
       <div class="column">
         <div class="field">
-          <label class="label">Stad</label>
+          <label class="label">Stad*</label>
           <p :class="{ 'control': true }">
             <input v-model="address.city" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('stad')}" name="stad" type="text" placeholder="stad" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
         </div>
 
         <div class="field">
-          <label class="label">Land</label>
+          <label class="label">Land*</label>
           <p :class="{ 'control': true }">
             <input v-model="address.country" @input="inputChanged()" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('land')}" name="land" type="text" placeholder="land" autocomplete="off" autocorrect="off" spellcheck="false" :readonly="isLoading">
           </p>
@@ -119,5 +119,14 @@ export default {
 <style scoped>
 .label {
   color: #4a4a4a;
+}
+
+.column {
+  padding-top: 0;
+}
+
+.displayname {
+  margin-bottom: 1.5rem;
+  margin-top: -0.8rem;
 }
 </style>

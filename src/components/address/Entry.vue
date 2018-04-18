@@ -8,7 +8,7 @@
     </div>
     <div class="card-content">
       <div v-if="isEditing">
-        <AddressInputForm v-if="isEditing" :data="address" :isLoading="isLoading" @response="response" @addressChanged="addressChanged"></AddressInputForm>
+        <AddressInputForm v-if="isEditing" :data="address" :isLoading="isLoading" @response="response"></AddressInputForm>
         <hr>
       </div>
 
@@ -60,10 +60,6 @@ export default {
     cancelEdit() {
       this.isEditing = false;
       this.address = this.addressBackup;
-    },
-
-    addressChanged(address) {
-      this.address = address;
     },
 
     save() {

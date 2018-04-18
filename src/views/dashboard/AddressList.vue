@@ -1,15 +1,17 @@
 <template>
   <div>
+    <SectionInfo>Nedan kan du visa och redigera dina mottagare.</SectionInfo>
     <AddressEntry v-for="address in addresses" :data="address" :key="address._id" @addressRemoved="addressRemoved"></AddressEntry>
   </div>
 </template>
 
 <script>
+import SectionInfo from '../../components/dashboard/SectionInfo';
 import AddressEntry from '../../components/address/Entry';
 import { Toast } from '../../mixins/Toast';
 
 export default {
-  components: { AddressEntry },
+  components: { SectionInfo, AddressEntry },
   mixins: [Toast],
   data() {
     return {

@@ -53,7 +53,7 @@ export default {
 }
 
 .has-extra-height {
-  min-height: 400px;
+  min-height: 500px;
 }
 
 .logo {

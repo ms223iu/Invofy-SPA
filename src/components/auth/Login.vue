@@ -1,5 +1,5 @@
 <template>
-  <div @keyup.enter="login()">
+  <form @keyup.enter="login()" @submit.prevent>
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
@@ -11,11 +11,11 @@
     <div class="field">
       <label class="label">Lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.password" v-validate="'required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" :readonly="isLoggingIn">
+        <input v-model="form.password" v-validate="'required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" autocomplete="on" :readonly="isLoggingIn">
       </p>
     </div>
-    <button :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-outlined is-active']" @click="login()">Logga in</button>
-  </div>
+    <button :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-outlined is-active is-fullwidth mt-2']" @click="login()">Logga in</button>
+  </form>
 </template>
 
 <script>
@@ -63,7 +63,7 @@ export default {
           if (status == 401) {
             this.showErrorToast(
               'Ditt konto är inte aktiv eller har blivit spärrad. Kontakta supporten',
-              5000
+              4000
             );
           } else if (status == 403) {
             this.showErrorToast('Felaktigt lösenord');
@@ -81,9 +81,7 @@ export default {
 };
 </script>
 
-<style scoped>
-.button {
-  width: 100%;
-}
+<style >
+
 </style>
 

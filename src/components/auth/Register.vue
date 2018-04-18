@@ -1,5 +1,5 @@
 <template>
-  <form @keyup.enter="register()" @submit.prevent>
+  <div @keyup.enter="register()">
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
@@ -25,7 +25,7 @@
     </div>
 
     <button :class="[ isLoading ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-active is-outlined is-fullwidth mt-2']" @click="register()">Registrera</button>
-  </form>
+  </div>
 </template>
 
 <script>

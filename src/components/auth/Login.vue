@@ -1,5 +1,5 @@
 <template>
-  <form @keyup.enter="login()" @submit.prevent>
+  <div @keyup.enter="login()">
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
@@ -15,7 +15,7 @@
       </p>
     </div>
     <button :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-outlined is-active is-fullwidth mt-2']" @click="login()">Logga in</button>
-  </form>
+  </div>
 </template>
 
 <script>

@@ -5,7 +5,7 @@
 
     <button v-if="!isEditing" class="button is-danger is-medium is-fullwidth mt-1" @click="edit">Ändra</button>
 
-    <div v-else class="is-pulled-right mt-1 mb-1">
+    <div v-else class="is-pulled-right mt-1 mb-2">
       <button class="button is-info is-medium" @click="cancel">Avbryt</button>
       <button class="button is-success is-medium" @click="save">Spara ändringar</button>
     </div>
@@ -53,7 +53,6 @@ export default {
     response() {
       if (this.isEqual(this.company, this.companyOld)) {
         this.isEditing = false;
-        this.showSuccessToast('Inga ändringar gjorda', 1500);
         return;
       }
 

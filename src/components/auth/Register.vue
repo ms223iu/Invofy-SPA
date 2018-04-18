@@ -1,5 +1,5 @@
 <template>
-  <div @keyup.enter="register()">
+  <form @keyup.enter="register()" @submit.prevent>
     <div class="field">
       <label class="label">Email</label>
       <p :class="{ 'control': true }">
@@ -11,7 +11,7 @@
     <div class="field">
       <label class="label">Lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" :readonly="isLoading">
+        <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" autocomplete="on" :readonly="isLoading">
         <span v-show="errors.has('lösenord')" class="help is-danger">{{ errors.first('lösenord') }}</span>
       </p>
     </div>
@@ -19,13 +19,13 @@
     <div class="field">
       <label class="label">Bekräfta lösenord</label>
       <p :class="{ 'control': true }">
-        <input v-model="form.confirmedPassword" v-validate="'required|confirmed:lösenord'" :class="{'input is-medium': true, 'is-danger': errors.has('bekräfta')}" name="bekräfta" type="password" placeholder="lösenord" data-vv-as="bekräfta lösenord" :readonly="isLoading">
+        <input v-model="form.confirmedPassword" v-validate="'required|confirmed:lösenord'" :class="{'input is-medium': true, 'is-danger': errors.has('bekräfta')}" name="bekräfta" type="password" placeholder="lösenord" data-vv-as="bekräfta lösenord" autocomplete="on" :readonly="isLoading">
         <span v-show="errors.has('bekräfta')" class="help is-danger">{{ errors.first('bekräfta') }}</span>
       </p>
     </div>
 
-    <button :class="[ isLoading ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-active is-outlined']" @click="register()">Registrera</button>
-  </div>
+    <button :class="[ isLoading ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-active is-outlined is-fullwidth mt-2']" @click="register()">Registrera</button>
+  </form>
 </template>
 
 <script>
@@ -88,8 +88,6 @@ export default {
 };
 </script>
 
-<style scoped>
-.button {
-  width: 100%;
-}
+<style>
+
 </style>

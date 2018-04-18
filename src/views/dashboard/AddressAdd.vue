@@ -16,8 +16,8 @@
 <script>
 import { EventBus } from '../../event-bus';
 import { Toast } from '../../mixins/Toast';
-import AddressInputForm from '../address/InputForm';
-import AddressPreview from '../address/Preview';
+import AddressInputForm from '../../components/address/InputForm';
+import AddressPreview from '../../components/address/Preview';
 
 export default {
   components: { AddressInputForm, AddressPreview },

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AddressEntry from '../address/Entry';
+import AddressEntry from '../../components/address/Entry';
 import { Toast } from '../../mixins/Toast';
 
 export default {

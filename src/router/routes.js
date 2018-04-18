@@ -3,11 +3,11 @@ import Home from '../views/Home';
 import Auth from '../views/Auth';
 import Dashboard from '../views/Dashboard';
 
-import InvoicesList from '../components/dashboard/InvoicesList';
-import AddInvoice from '../components/dashboard/AddInvoice';
+import InvoicesList from '../views/dashboard/InvoicesList';
+import InvoiceAdd from '../views/dashboard/InvoiceAdd';
 
-import AddressList from '../components/dashboard/AddressList';
-import AddAddress from '../components/dashboard/AddAddress';
+import AddressList from '../views/dashboard/AddressList';
+import AddressAdd from '../views/dashboard/AddressAdd';
 
 import MyCompany from '../views/dashboard/MyCompany';
 
@@ -48,7 +48,7 @@ export default [
       },
       {
         path: 'invoice/add',
-        component: AddInvoice
+        component: InvoiceAdd
       },
       {
         path: 'address',
@@ -56,7 +56,7 @@ export default [
       },
       {
         path: 'address/add',
-        component: AddAddress
+        component: AddressAdd
       },
       {
         path: 'settings/company',

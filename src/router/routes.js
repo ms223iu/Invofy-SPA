@@ -23,6 +23,9 @@ export default [
     path: '/auth',
     redirect: '/auth/login',
     component: Auth,
+    beforeEnter: (to, from, next) => {
+      if (store.getters.isAuthenticated) { next({ path: '/dashboard' }); } else { next(); }
+    },
     children: [
       {
         path: 'login',
@@ -39,7 +42,7 @@ export default [
     redirect: '/dashboard/invoice',
     component: Dashboard,
     beforeEnter: (to, from, next) => {
-      if (store.getters.isAuthenticated) { next(); } else { next({ path: '/' }); }
+      if (store.getters.isAuthenticated) { next(); } else { next({ path: '/auth/login' }); }
     },
     children: [
       {

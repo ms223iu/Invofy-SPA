@@ -9,6 +9,8 @@ import AddInvoice from '../components/dashboard/AddInvoice';
 import AddressList from '../components/dashboard/AddressList';
 import AddAddress from '../components/dashboard/AddAddress';
 
+import MyCompany from '../views/dashboard/MyCompany';
+
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
 
@@ -55,6 +57,10 @@ export default [
       {
         path: 'address/add',
         component: AddAddress
+      },
+      {
+        path: 'settings/company',
+        component: MyCompany
       }
     ]
   }

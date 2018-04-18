@@ -22,6 +22,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.section {
+  padding-top: 2.4rem;
+}
 
+@media screen and (max-width: 1023px) {
+  .column {
+    padding: 0;
+  }
+}
 </style>

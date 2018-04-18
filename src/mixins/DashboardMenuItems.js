@@ -27,6 +27,15 @@ export var DashboardMenuItems = {
               to: '/dashboard/address/add'
             }
           ]
+        },
+        {
+          category: 'Inställningar',
+          items: [
+            {
+              name: 'Mitt företag',
+              to: '/dashboard/settings/company'
+            }
+          ]
         }
       ]
     };

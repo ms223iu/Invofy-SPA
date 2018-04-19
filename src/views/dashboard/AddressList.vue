@@ -2,25 +2,33 @@
   <div>
     <SectionInfo>Nedan kan du visa och redigera dina mottagare.</SectionInfo>
     <AddressEntry v-for="address in addresses" :data="address" :key="address._id" @addressRemoved="addressRemoved"></AddressEntry>
+    <p v-if="hasNoAddresses" class="has-text-centered is-size-5">Du har inga tillagda mottagare.</p>
   </div>
 </template>
 
 <script>
+import { Toast } from '../../mixins/Toast';
+import { ObjectUtil } from '../../mixins/ObjectUtil';
 import SectionInfo from '../../components/dashboard/SectionInfo';
 import AddressEntry from '../../components/address/Entry';
-import { Toast } from '../../mixins/Toast';
 
 export default {
   components: { SectionInfo, AddressEntry },
-  mixins: [Toast],
+  mixins: [Toast, ObjectUtil],
   data() {
     return {
-      addresses: null
+      addresses: {}
     };
   },
 
   created() {
     this.apiGetAddresses();
+  },
+
+  computed: {
+    hasNoAddresses() {
+      return this.isEmpty(this.addresses);
+    }
   },
 
   methods: {

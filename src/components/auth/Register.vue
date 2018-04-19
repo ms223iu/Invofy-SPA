@@ -1,28 +1,30 @@
 <template>
   <div @keyup.enter="register()">
-    <div class="field">
-      <label class="label">Email</label>
-      <p :class="{ 'control': true }">
-        <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :readonly="isLoading">
-        <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
-      </p>
-    </div>
+    <form>
+      <div class="field">
+        <label class="label">Email</label>
+        <p :class="{ 'control': true }">
+          <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" autocomplete="email" :readonly="isLoading">
+          <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
+        </p>
+      </div>
 
-    <div class="field">
-      <label class="label">Lösenord</label>
-      <p :class="{ 'control': true }">
-        <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" autocomplete="on" :readonly="isLoading">
-        <span v-show="errors.has('lösenord')" class="help is-danger">{{ errors.first('lösenord') }}</span>
-      </p>
-    </div>
+      <div class="field">
+        <label class="label">Lösenord</label>
+        <p :class="{ 'control': true }">
+          <input v-model="form.password" v-validate="'min:8|required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" autocomplete="on" :readonly="isLoading">
+          <span v-show="errors.has('lösenord')" class="help is-danger">{{ errors.first('lösenord') }}</span>
+        </p>
+      </div>
 
-    <div class="field">
-      <label class="label">Bekräfta lösenord</label>
-      <p :class="{ 'control': true }">
-        <input v-model="form.confirmedPassword" v-validate="'required|confirmed:lösenord'" :class="{'input is-medium': true, 'is-danger': errors.has('bekräfta')}" name="bekräfta" type="password" placeholder="lösenord" data-vv-as="bekräfta lösenord" autocomplete="on" :readonly="isLoading">
-        <span v-show="errors.has('bekräfta')" class="help is-danger">{{ errors.first('bekräfta') }}</span>
-      </p>
-    </div>
+      <div class="field">
+        <label class="label">Bekräfta lösenord</label>
+        <p :class="{ 'control': true }">
+          <input v-model="form.confirmedPassword" v-validate="'required|confirmed:lösenord'" :class="{'input is-medium': true, 'is-danger': errors.has('bekräfta')}" name="bekräfta" type="password" placeholder="lösenord" data-vv-as="bekräfta lösenord" autocomplete="on" :readonly="isLoading">
+          <span v-show="errors.has('bekräfta')" class="help is-danger">{{ errors.first('bekräfta') }}</span>
+        </p>
+      </div>
+    </form>
 
     <button :class="[ isLoading ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-active is-outlined is-fullwidth mt-2']" @click="register()">Registrera</button>
   </div>

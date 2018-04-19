@@ -91,6 +91,12 @@ export default {
     });
   },
 
+  watch: {
+    readOnly() {
+      this.errors.clear();
+    }
+  },
+
   methods: {
     validateForm() {
       if (this.readOnly) return;

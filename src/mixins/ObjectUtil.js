@@ -1,8 +1,8 @@
 export let ObjectUtil = {
 
   methods: {
-    isEmpty(object) {
-      return Object.keys(obj).length === 0 && obj.constructor === Object;
+    isEmpty(obj) {
+      return Object.keys(obj).length === 0;
     },
 
     isEqual(obj1, obj2) {

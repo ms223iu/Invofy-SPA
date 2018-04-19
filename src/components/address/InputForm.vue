@@ -122,7 +122,7 @@ export default {
 }
 
 .displayname {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem !important;
   margin-top: -0.8rem;
 }
 </style>

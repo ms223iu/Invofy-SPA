@@ -7,7 +7,7 @@
     <AddressPreview :address="address"></AddressPreview>
     <hr>
 
-    <div class="is-pulled-right mb-1">
+    <div class="is-pulled-right mb-2">
       <button :class="[isLoading ? 'is-loading': '', 'button is-info is-medium']" @click="clear()">Rensa</button>
       <button :class="[isLoading ? 'is-loading': '', 'button is-success is-medium']" @click="save()" :disabled="isLoading">Lägg till mottagare</button>
     </div>

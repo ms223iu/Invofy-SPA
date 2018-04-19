@@ -1,19 +1,22 @@
 <template>
   <div @keyup.enter="login()">
-    <div class="field">
-      <label class="label">Email</label>
-      <p :class="{ 'control': true }">
-        <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :readonly="isLoggingIn">
-        <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
-      </p>
-    </div>
+    <form>
+      <div class="field">
+        <label class="label">Email</label>
+        <p :class="{ 'control': true }">
+          <input v-model="form.email" v-validate="'email|required'" :class="{'input is-medium': true, 'is-danger': errors.has('email')}" ref="email" name="email" type="email" placeholder="email" :readonly="isLoggingIn">
+          <span v-show="errors.has('email')" class="help is-danger has-text-2">{{ errors.first('email') }}</span>
+        </p>
+      </div>
 
-    <div class="field">
-      <label class="label">Lösenord</label>
-      <p :class="{ 'control': true }">
-        <input v-model="form.password" v-validate="'required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" autocomplete="on" :readonly="isLoggingIn">
-      </p>
-    </div>
+      <div class="field">
+        <label class="label">Lösenord</label>
+        <p :class="{ 'control': true }">
+          <input v-model="form.password" v-validate="'required'" :class="{'input is-medium': true, 'is-danger': errors.has('lösenord')}" name="lösenord" type="password" placeholder="lösenord" autocomplete="on" :readonly="isLoggingIn">
+        </p>
+      </div>
+    </form>
+
     <button :class="[ isLoggingIn ? 'is-loading' : '', 'button is-info mt-1 is-centered is-medium is-outlined is-active is-fullwidth mt-2']" @click="login()">Logga in</button>
   </div>
 </template>

@@ -9,19 +9,25 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(row, index) in rows" :key="index">
-        <td><input v-model="row.description" class="input" type="text"></td>
-        <td><input v-model="row.amount" class="input" type="number"></td>
-        <td><input v-model="row.price" class="input" type="number"></td>
-        <td>{{row.amount * row.price}} kr</td>
+      <tr v-for="(row, index) in rows" :key="index" @input="calculateRows()">
+        <template v-if="(row.description || row.amount || row.price) || index == 0">
+          <td><input v-model="row.description" v-validate="'required'" :class="{'input is-medium': true, 'is-danger': errors.has('d'+index)}" :name="'d'+index" type="text" :disabled="loading"></td>
+          <td><input v-model="row.amount" v-validate="'required|numeric|min_value:1'" :class="{'input has-text-centered is-medium': true, 'is-danger': errors.has('a'+index)}" :name="'a'+index" type="number" :disabled="loading"></td>
+          <td><input v-model="row.price" v-validate="'required|numeric|min_value:0'" :class="{'input has-text-centered is-medium': true, 'is-danger': errors.has('p'+index)}" :name="'p'+index" type="number" :disabled="loading"></td>
+        </template>
+
+        <template v-else>
+          <td><input v-model="row.description" class="input is-medium" type="text" :disabled="loading"></td>
+          <td><input v-model="row.amount" v-validate="'numeric|min_value:1' " :class="{'input has-text-centered is-medium': true, 'is-danger': errors.has('a'+index)}" :name="'a'+index" type="number" :disabled="loading"></td>
+          <td><input v-model="row.price" v-validate="'numeric|min_value:0'" :class="{'input has-text-centered is-medium': true, 'is-danger': errors.has('p'+index)}" :name="'p'+index" type="number" :disabled="loading"></td>
+        </template>
+        <td class="has-text-right">{{ getRowSum(row.amount, row.price) }}</td>
       </tr>
       <tr>
-        <td>
-          <button class="button is-info is-fullwidth" type="button" @click=addRow()>Lägg till en rad</button>
-        </td>
         <td></td>
-        <td>Summa</td>
-        <td>{{ getTotalSum }} kr</td>
+        <td></td>
+        <td class="is-size-5 has-text-weight-semibold">Summa</td>
+        <td class="has-text-right is-size-5 has-text-weight-semibold">{{ grandTotal }}</td>
       </tr>
     </tbody>
   </table>
@@ -29,44 +35,60 @@
 
 <script>
 export default {
+  inject: ['$validator'],
+  props: ['loading'],
   data() {
     return {
       rows: [{}]
     };
   },
-  watch: {
-    rows() {
-      var length = this.rows.length - 1;
-      if (
-        this.rows[length].description &&
-        this.rows[length].amount &&
-        this.rows[length].price
-      ) {
-        this.addRow();
-      }
+
+  mounted() {
+    // Works because rows is an complex datatype (object)
+    // No need to listen for changes
+    this.$emit('items', this.rows);
+  },
+
+  methods: {
+    getRowSum(amount, price) {
+      if (!amount || !price) return '';
+      return amount * price + ' kr';
+    },
+
+    calculateRows() {
+      let error = false;
+
+      // Check if every field has been filled
+      this.rows.forEach(row => {
+        if (!row.description || !row.amount || !row.price) error = true;
+      });
+
+      // Add a row if that's the case
+      if (!error) this.addRow();
+    },
+
+    addRow() {
+      this.rows.push({});
     }
   },
 
   computed: {
-    getTotalSum() {
+    grandTotal() {
       let sum = 0;
 
       this.rows.forEach(row => {
+        if (!row.amount || !row.price) return;
         sum += row.amount * row.price;
       });
 
-      return isNaN(sum) ? 0 : sum;
-    }
-  },
-
-  methods: {
-    addRow() {
-      this.rows.push({});
+      return isNaN(sum) ? '0 kr' : sum + ' kr';
     }
   }
 };
 </script>
 
-<style>
-
+<style scoped>
+td {
+  vertical-align: middle;
+}
 </style>

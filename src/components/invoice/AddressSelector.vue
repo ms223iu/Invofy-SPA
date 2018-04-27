@@ -1,19 +1,19 @@
 <template>
   <div class="control">
     <label class="label">Kund / Mottagare*</label>
-    <p class="control">
-      <div :class="[isLoading ? 'is-loading' : '', 'select is-fullwidth is-medium']">
-        <select v-model="selectedAddress" :disabled="isLoading">
-          <option value="" selected disabled hidden>Välj en mottagare</option>
-          <option v-for="(addr, index) in addresses" :value="addr" :key="index">{{ addr.displayName }} - {{ addr.customer }}</option>
-        </select>
-      </div>
-    </p>
+    <div :class="{'is-loading': isLoading, 'is-danger': errors.has('mottagare'), 'select is-fullwidth is-medium': true}">
+      <select v-model="selectedAddress" v-validate="'required|not_in:Välj en mottagare'" name="mottagare" @change="addressChanged()" :disabled="isLoading">
+        <option value="" selected disabled hidden>Välj en mottagare</option>
+        <option v-for="(addr, index) in addresses" :value="addr" :key="index">{{ addr.displayName }} - {{ addr.customer }}</option>
+      </select>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  inject: ['$validator'],
+  props: ['loading'],
   data() {
     return {
       isLoading: true,
@@ -22,17 +22,21 @@ export default {
     };
   },
 
+  watch: {
+    loading() {
+      this.isLoading = this.loading;
+    }
+  },
+
   created() {
     this.apiGetAddresses();
   },
 
-  watch: {
-    selectedAddress() {
-      this.$emit('changed', this.selectedAddress);
-    }
-  },
-
   methods: {
+    addressChanged() {
+      this.$emit('changed', this.selectedAddress);
+    },
+
     apiGetAddresses() {
       axios
         .get('api/address')

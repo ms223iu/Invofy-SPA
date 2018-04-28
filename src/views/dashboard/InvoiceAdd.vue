@@ -9,6 +9,14 @@
       </div>
     </div>
 
+    <div v-if="customerIsEmpty" class="columns">
+      <div class="column">
+      </div>
+      <div class="column">
+        <AddressPreview :address="data.customer"></AddressPreview>
+      </div>
+    </div>
+
     <InputTable @items="itemsChanged" :loading="isLoading"></InputTable>
     <button type="button" :class="{'is-loading': isLoading, 'button is-medium is-success is-fullwidth': true}" @click="save()">Spara Faktura</button>
   </div>
@@ -16,13 +24,20 @@
 
 <script>
 import { Toast } from '../../mixins/Toast';
+import { ObjectUtil } from '../../mixins/ObjectUtil';
 import InvoiceNumberInput from '../../components/invoice/InvoiceNumberInput';
 import AddressSelector from '../../components/invoice/AddressSelector';
+import AddressPreview from '../../components/address/Preview';
 import InputTable from '../../components/invoice/InputTable';
 
 export default {
-  components: { InvoiceNumberInput, AddressSelector, InputTable },
-  mixins: [Toast],
+  components: {
+    InvoiceNumberInput,
+    AddressSelector,
+    AddressPreview,
+    InputTable
+  },
+  mixins: [Toast, ObjectUtil],
   data() {
     return {
       isLoading: false,
@@ -71,6 +86,11 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
+    }
+  },
+  computed: {
+    customerIsEmpty() {
+      return !this.isEmpty(this.data.customer);
     }
   }
 };

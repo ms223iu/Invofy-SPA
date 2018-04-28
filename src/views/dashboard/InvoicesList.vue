@@ -1,28 +1,15 @@
 <template>
   <div class="has-text-centered">
-    <table class="table is-fullwidth is-stripped is-bordered">
-      <tr>
-        <th>#</th>
-        <th>Mottagare</th>
-        <th>Skapades</th>
-        <th>Hantera</th>
-      </tr>
-      <tr v-for="(invoice, index) in invoices" :key="index">
-        <td>{{ invoice.number }}</td>
-        <td>{{ invoice.customer.displayName }}</td>
-        <td>{{ invoice.date | date }}</td>
-        <td>
-          <button class="button is-danger" @click="remove(invoice._id)">Ta Bort</button>
-        </td>
-      </tr>
-    </table>
+    <InvoiceTable :data="invoices" @remove="remove"></InvoiceTable>
   </div>
 </template>
 
 <script>
 import { Toast } from '../../mixins/Toast';
+import InvoiceTable from '../../components/invoice/InvoiceTable';
 
 export default {
+  components: { InvoiceTable },
   mixins: [Toast],
   data() {
     return {
@@ -37,7 +24,8 @@ export default {
 
   methods: {
     remove(id) {
-      this.apiDeleteInvoice(id);
+      console.log(id);
+      //this.apiDeleteInvoice(id);
     },
 
     invoiceRemoved(id) {
@@ -68,21 +56,6 @@ export default {
           this.showErrorToast('Något gick fel. Försök igen senare');
         })
         .finally(() => {});
-    }
-  },
-
-  filters: {
-    date(value) {
-      if (!value) return '';
-      let date = new Date(value);
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
-
-      if (day < 10) day = '0' + day;
-      if (month < 10) month = '0' + month;
-
-      return day + '-' + month + '-' + year;
     }
   }
 };

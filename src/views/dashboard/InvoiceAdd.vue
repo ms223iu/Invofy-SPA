@@ -9,11 +9,11 @@
       </div>
     </div>
 
-    <div v-if="customerIsEmpty" class="columns">
+    <div class="columns">
       <div class="column">
       </div>
       <div class="column">
-        <AddressPreview :address="data.customer"></AddressPreview>
+        <AddressPreview v-if="!customerIsEmpty" :address="selectedCustomer"></AddressPreview>
       </div>
     </div>
 
@@ -41,9 +41,10 @@ export default {
   data() {
     return {
       isLoading: false,
+      selectedCustomer: {},
       data: {
         number: '',
-        customer: {},
+        customer: '',
         items: []
       }
     };
@@ -55,7 +56,8 @@ export default {
     },
 
     customerChanged(customer) {
-      this.data.customer = customer;
+      this.data.customer = customer._id;
+      this.selectedCustomer = customer;
     },
 
     itemsChanged(items) {
@@ -81,6 +83,8 @@ export default {
           this.$router.push('/dashboard/invoice');
         })
         .catch(error => {
+          // Add empty row
+          this.data.items.push({});
           this.showErrorToast('Något gick fel. Försök igen senare');
         })
         .finally(() => {
@@ -90,7 +94,7 @@ export default {
   },
   computed: {
     customerIsEmpty() {
-      return !this.isEmpty(this.data.customer);
+      return this.isEmpty(this.selectedCustomer);
     }
   }
 };

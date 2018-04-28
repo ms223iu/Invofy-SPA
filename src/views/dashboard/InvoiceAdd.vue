@@ -11,6 +11,7 @@
 
     <div class="columns">
       <div class="column">
+        <CompanyPreview></CompanyPreview>
       </div>
       <div class="column">
         <AddressPreview v-if="!customerIsEmpty" :address="selectedCustomer"></AddressPreview>
@@ -27,6 +28,7 @@ import { Toast } from '../../mixins/Toast';
 import { ObjectUtil } from '../../mixins/ObjectUtil';
 import InvoiceNumberInput from '../../components/invoice/InvoiceNumberInput';
 import AddressSelector from '../../components/invoice/AddressSelector';
+import CompanyPreview from '../../components/company/Preview';
 import AddressPreview from '../../components/address/Preview';
 import InputTable from '../../components/invoice/InputTable';
 
@@ -34,6 +36,7 @@ export default {
   components: {
     InvoiceNumberInput,
     AddressSelector,
+    CompanyPreview,
     AddressPreview,
     InputTable
   },

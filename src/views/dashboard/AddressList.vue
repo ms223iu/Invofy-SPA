@@ -45,7 +45,9 @@ export default {
           this.addresses = response.data;
         })
         .catch(error => {
-          this.showErrorToast('Något gick fel. Försök igen senare');
+          if (error.response.status !== 404) {
+            this.showErrorToast('Något gick fel. Försök igen senare');
+          }
         });
     }
   }

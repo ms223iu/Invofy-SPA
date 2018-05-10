@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SectionInfo>Företagsinformation som du ser nedan kommer att automatiskt finnas på alla nya fakturor. Vid informationsändring förändras inte infon på befintliga fakturor.</SectionInfo>
+    <SectionInfo>Företagsinformation som du ser nedan kommer att automatiskt finnas på alla dina fakturor.</SectionInfo>
     <InputForm :readOnly="!isEditing" :data="company" @response="response"></InputForm>
 
     <button v-if="!isEditing" class="button is-danger is-medium is-fullwidth mt-1" @click="edit">Ändra</button>

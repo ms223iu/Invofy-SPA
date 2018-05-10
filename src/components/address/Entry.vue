@@ -1,7 +1,7 @@
 <template>
   <b-collapse class="card" :open="false" animation="none">
     <div slot="trigger" slot-scope="props" class="card-header">
-      <div class="card-header-title">{{ address.displayName }}</div>
+      <div class="card-header-title">{{ address.displayName }} - {{ address.customer }}</div>
       <a class="card-header-icon">
         <b-icon :icon="props.open ? 'menu-up' : 'menu-down'"></b-icon>
       </a>

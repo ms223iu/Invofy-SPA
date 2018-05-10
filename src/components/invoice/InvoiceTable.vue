@@ -1,5 +1,5 @@
 <template>
-  <table class="table is-fullwidth is-stripped is-bordered">
+  <table v-if="!isEmpty(data)" class="table is-fullwidth is-stripped is-bordered">
     <tr>
       <th>#</th>
       <th>Mottagare</th>
@@ -12,14 +12,16 @@
       <td class="has-text-centered">{{ invoice.date | date }}</td>
       <td class="has-text-centered">
         <button class="button is-danger" @click="remove(invoice._id)">Ta Bort</button>
-        <button class="button is-success">Hämta</button>
+        <a :href="'/api/invoice/pdf/' + invoice._id" class="button is-success">Hämta</a>
       </td>
     </tr>
   </table>
 </template>
 
 <script>
+import { ObjectUtil } from '../../mixins/ObjectUtil';
 export default {
+  mixins: [ObjectUtil],
   props: {
     data: {
       default: {}
@@ -48,6 +50,8 @@ export default {
 
       if (day < 10) day = '0' + day;
       if (month < 10) month = '0' + month;
+      if (hour < 10) hour = '0' + hour;
+      if (minutes < 10) minutes = '0' + minutes;
 
       return day + '-' + month + '-' + year + ' ' + hour + ':' + minutes;
     }
@@ -63,6 +67,7 @@ th:nth-child(1) {
 th:nth-child(3) {
   width: 160px;
 }
+
 th:nth-child(4) {
   width: 180px;
 }

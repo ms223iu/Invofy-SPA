@@ -1,16 +1,23 @@
 <template>
-  <div class="has-text-centered">
-    <InvoiceTable :data="invoices" @remove="remove"></InvoiceTable>
+  <div>
+    <SectionInfo>Här kan du hitta alla dina skapade fakturor</SectionInfo>
+
+    <div class="has-text-centered">
+      <p v-if="hasNoInvoices" class="has-text-centered is-size-5">Du har inga skapade fakturor</p>
+      <InvoiceTable v-else :data="invoices" @remove="remove"></InvoiceTable>
+    </div>
   </div>
 </template>
 
 <script>
 import { Toast } from '../../mixins/Toast';
+import { ObjectUtil } from '../../mixins/ObjectUtil';
 import InvoiceTable from '../../components/invoice/InvoiceTable';
+import SectionInfo from '../../components/dashboard/SectionInfo';
 
 export default {
-  components: { InvoiceTable },
-  mixins: [Toast],
+  components: { InvoiceTable, SectionInfo },
+  mixins: [Toast, ObjectUtil],
   data() {
     return {
       isLoading: false,
@@ -22,10 +29,15 @@ export default {
     this.apiGetInvoices();
   },
 
+  computed: {
+    hasNoInvoices() {
+      return this.isEmpty(this.invoices);
+    }
+  },
+
   methods: {
     remove(id) {
-      console.log(id);
-      //this.apiDeleteInvoice(id);
+      this.apiDeleteInvoice(id);
     },
 
     invoiceRemoved(id) {
@@ -41,7 +53,9 @@ export default {
           this.invoices = response.data;
         })
         .catch(error => {
-          this.showErrorToast('Något gick fel. Försök igen senare');
+          if (error.response.status !== 404) {
+            this.showErrorToast('Något gick fel. Försök igen senare');
+          }
         });
     },
 
@@ -54,8 +68,7 @@ export default {
         })
         .catch(err => {
           this.showErrorToast('Något gick fel. Försök igen senare');
-        })
-        .finally(() => {});
+        });
     }
   }
 };

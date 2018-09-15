@@ -11,8 +11,8 @@
       <td>{{ invoice.customer.displayName }}</td>
       <td class="has-text-centered">{{ invoice.date | date }}</td>
       <td class="has-text-centered">
-        <button class="button is-danger" @click="remove(invoice._id)">Ta Bort</button>
-        <a :href="'/api/invoice/pdf/' + invoice._id" class="button is-success">Hämta</a>
+        <Button type="danger" :safe="true" @onClick="remove(invoice._id)" :isLoading="isDownloadingPdf">Ta bort</Button>
+        <Button @onClick="pdfDownloadInvoice(invoice._id, invoice.number, invoice.date)" :isLoading="isDownloadingPdf">Hämta</Button>
       </td>
     </tr>
   </table>
@@ -20,19 +20,38 @@
 
 <script>
 import { ObjectUtil } from '../../mixins/ObjectUtil';
+import Button from '../generic/Button';
+
 export default {
+  components: { Button },
   mixins: [ObjectUtil],
   props: {
     data: {
-      default: {}
+		default: {}
     }
   },
 
   data() {
-    return {};
+    return {
+			isDownloadingPdf: false
+		};
   },
 
   methods: {
+    pdfDownloadInvoice(id, number, date) {
+				this.isDownloadingPdf = true;
+				axios.get(`api/invoice/pdf/${id}`, {responseType: 'blob'}).then((response) => {
+					const url = window.URL.createObjectURL(new Blob([response.data]));
+					const link = document.createElement('a');
+					link.href = url;
+					link.setAttribute('download', `faktura-${number}-${date.split('T')[0]}.pdf`);
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+				}).finally(() => {
+					this.isDownloadingPdf = false;
+				})
+    },
     remove(id) {
       this.$emit('remove', id);
     }
@@ -65,11 +84,11 @@ th:nth-child(1) {
 }
 
 th:nth-child(3) {
-  width: 160px;
+  width: 180px;
 }
 
 th:nth-child(4) {
-  width: 180px;
+  width: 200px;
 }
 
 td {
